@@ -1,821 +1,1515 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl" lang="ar">
 <head>
-    <base target="_top">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ ICHANCY - لوحة الإدارة</title>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ ICHANCY - لوحة الإدارة المتقدمة</title>
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <!-- sql.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.min.js">
+  </script>
+  
+  <style>
+    /* ============================================================
+       المتغيرات - الأزرق والأبيض
+       ============================================================ */
+    :root {
+      --primary: #0d6efd;
+      --primary-dark: #0a58ca;
+      --primary-light: #6ea8fe;
+      --primary-bg: #e8f0fe;
+      --primary-glow: rgba(13, 110, 253, 0.25);
+      --secondary: #6c757d;
+      --success: #198754;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --info: #0dcaf0;
+      --white: #ffffff;
+      --light: #f8f9fa;
+      --dark: #1a1a2e;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 12px 48px rgba(13, 110, 253, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
     
-    <!-- Bootstrap 5 RTL -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- sql.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.min.js">
-    </script>
+    /* ============================================================
+       الأساسيات
+       ============================================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     
-    <style>
-        :root {
-            --primary: #0d6efd;
-            --danger: #dc3545;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --bg-dark: #0a0a1a;
-            --bg-card: #111128;
-            --text-light: #e8e8f0;
-            --text-muted: #8888bb;
-            --border-color: #2a2a55;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background: var(--bg-dark);
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-        }
-        
-        .sidebar {
-            background: var(--bg-card);
-            min-height: 100vh;
-            padding: 20px 0;
-            border-left: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
-        
-        .sidebar .logo {
-            text-align: center;
-            padding: 0 20px 20px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 24px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--danger));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .sidebar .logo i {
-            -webkit-text-fill-color: initial;
-            color: var(--primary);
-        }
-        
-        .sidebar .subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 12px;
-            margin-top: 4px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .sidebar .nav-link {
-            color: var(--text-muted);
-            padding: 12px 20px;
-            border-radius: 10px;
-            margin: 4px 10px;
-            transition: all 0.3s;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .sidebar .nav-link:hover {
-            background: rgba(13, 110, 253, 0.1);
-            color: var(--text-light);
-        }
-        
-        .sidebar .nav-link.active {
-            background: linear-gradient(135deg, var(--primary), var(--danger));
-            color: white;
-            box-shadow: 0 4px 20px rgba(13, 110, 253, 0.3);
-        }
-        
-        .sidebar .nav-link i {
-            width: 20px;
-            text-align: center;
-        }
-        
-        .sidebar .nav-link .badge-count {
-            margin-right: auto;
-            background: var(--danger);
-            color: white;
-            font-size: 11px;
-            padding: 2px 10px;
-            border-radius: 20px;
-        }
-        
-        .main-content {
-            padding: 25px 35px;
-            min-height: 100vh;
-        }
-        
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .page-title {
-            font-size: 24px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .page-title .icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--danger));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-        }
-        
-        .page-title small {
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        
-        .btn-refresh {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-light);
-            padding: 8px 18px;
-            border-radius: 8px;
-            transition: all 0.3s;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-refresh:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 18px;
-            margin-bottom: 25px;
-        }
-        
-        .stat-card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px 24px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s;
-            cursor: default;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-            box-shadow: 0 8px 30px rgba(13, 110, 253, 0.15);
-        }
-        
-        .stat-card .stat-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .stat-card .stat-label {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-        
-        .stat-card .stat-number {
-            font-size: 28px;
-            font-weight: 900;
-            margin: 4px 0;
-        }
-        
-        .stat-card .stat-number.primary {
-            color: var(--primary);
-        }
-        .stat-card .stat-number.success {
-            color: var(--success);
-        }
-        .stat-card .stat-number.danger {
-            color: var(--danger);
-        }
-        .stat-card .stat-number.warning {
-            color: var(--warning);
-        }
-        
-        .stat-card .stat-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        
-        .stat-card .stat-icon.primary {
-            background: rgba(13, 110, 253, 0.15);
-            color: var(--primary);
-        }
-        .stat-card .stat-icon.success {
-            background: rgba(0, 184, 148, 0.15);
-            color: var(--success);
-        }
-        .stat-card .stat-icon.danger {
-            background: rgba(220, 53, 69, 0.15);
-            color: var(--danger);
-        }
-        .stat-card .stat-icon.warning {
-            background: rgba(253, 203, 110, 0.15);
-            color: var(--warning);
-        }
-        
-        .table-container {
-            background: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-        
-        .table-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .table-header h6 {
-            margin: 0;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .table-header .count {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        
-        .table-responsive {
-            padding: 0;
-        }
-        
-        .table {
-            margin: 0;
-            font-size: 13px;
-        }
-        
-        .table thead th {
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 2px solid var(--border-color);
-            color: var(--primary);
-            font-weight: 700;
-            padding: 12px 16px;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-        
-        .table tbody td {
-            padding: 10px 16px;
-            vertical-align: middle;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .table tbody tr:hover {
-            background: rgba(13, 110, 253, 0.05);
-        }
-        
-        .badge-status {
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        
-        .badge-status.pending {
-            background: rgba(253, 203, 110, 0.2);
-            color: var(--warning);
-        }
-        .badge-status.completed {
-            background: rgba(0, 184, 148, 0.2);
-            color: var(--success);
-        }
-        .badge-status.rejected {
-            background: rgba(220, 53, 69, 0.2);
-            color: var(--danger);
-        }
-        .badge-status.active {
-            background: rgba(0, 184, 148, 0.2);
-            color: var(--success);
-        }
-        .badge-status.inactive {
-            background: rgba(99, 110, 114, 0.2);
-            color: #636e72;
-        }
-        
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-            gap: 20px;
-        }
-        
-        .loading-container .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .loading-container p {
-            color: var(--text-muted);
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-        }
-        
-        .empty-state i {
-            font-size: 40px;
-            margin-bottom: 15px;
-            opacity: 0.3;
-        }
-        
-        .alert {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            border-right: 4px solid transparent;
-        }
-        
-        .alert-danger {
-            background: rgba(220, 53, 69, 0.1);
-            color: var(--danger);
-            border-right-color: var(--danger);
-        }
-        
-        .alert-success {
-            background: rgba(0, 184, 148, 0.1);
-            color: var(--success);
-            border-right-color: var(--success);
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                min-height: auto;
-                height: auto;
-                position: relative;
-                border-left: none;
-                border-bottom: 1px solid var(--border-color);
-            }
-            .sidebar .nav {
-                display: flex;
-                flex-wrap: wrap;
-                padding: 10px;
-                gap: 4px;
-            }
-            .sidebar .nav-link {
-                padding: 8px 12px;
-                font-size: 13px;
-                margin: 0;
-                flex: 1 1 auto;
-                min-width: 60px;
-                justify-content: center;
-            }
-            .sidebar .nav-link .nav-text {
-                display: none;
-            }
-            .sidebar .logo {
-                font-size: 20px;
-            }
-            .main-content {
-                padding: 15px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-                gap: 12px;
-            }
-            .stat-card .stat-number {
-                font-size: 22px;
-            }
-            .page-title {
-                font-size: 18px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .stat-card {
-                padding: 14px 16px;
-            }
-            .stat-card .stat-number {
-                font-size: 18px;
-            }
-            .table tbody td {
-                padding: 6px 8px;
-                font-size: 12px;
-            }
-            .table thead th {
-                padding: 6px 8px;
-                font-size: 10px;
-            }
-        }
-    </style>
+    body {
+      background: var(--light);
+      color: var(--dark);
+      font-family: 'Tajawal', 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+    
+    /* ============================================================
+       الشريط الجانبي
+       ============================================================ */
+    .sidebar {
+      background: var(--white);
+      min-height: 100vh;
+      padding: 0;
+      border-left: 1px solid var(--gray-light);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .sidebar-header {
+      padding: 25px 20px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    
+    .sidebar-header .logo {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+    
+    .sidebar-header .logo i {
+      color: var(--primary);
+      margin-left: 8px;
+    }
+    
+    .sidebar-header .subtitle {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+    
+    .sidebar .nav {
+      padding: 15px 10px;
+      flex: 1;
+    }
+    
+    .sidebar .nav-link {
+      color: var(--gray);
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      margin: 3px 0;
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      border: 1px solid transparent;
+      position: relative;
+    }
+    
+    .sidebar .nav-link:hover {
+      background: var(--primary-bg);
+      color: var(--primary);
+      border-color: var(--primary-light);
+    }
+    
+    .sidebar .nav-link.active {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 4px 20px var(--primary-glow);
+      border-color: var(--primary);
+    }
+    
+    .sidebar .nav-link i {
+      width: 22px;
+      text-align: center;
+      font-size: 16px;
+    }
+    
+    .sidebar .nav-link .badge-count {
+      margin-right: auto;
+      background: var(--danger);
+      color: var(--white);
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 20px;
+      min-width: 24px;
+      text-align: center;
+      animation: pulse-badge 2s infinite;
+    }
+    
+    @keyframes pulse-badge {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .sidebar-footer {
+      padding: 15px 20px;
+      border-top: 1px solid var(--gray-light);
+      text-align: center;
+      font-size: 11px;
+      color: var(--gray);
+    }
+    
+    /* ============================================================
+       المحتوى الرئيسي
+       ============================================================ */
+    .main-content {
+      padding: 25px 35px;
+      min-height: 100vh;
+      background: var(--light);
+    }
+    
+    /* ============================================================
+       الهيدر
+       ============================================================ */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .page-title {
+      font-size: 26px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .page-title .title-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--white);
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+    
+    .page-title .title-text {
+      color: var(--dark);
+    }
+    
+    .page-title small {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray);
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn-refresh {
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      color: var(--gray);
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    
+    .btn-refresh:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 30px var(--primary-glow);
+    }
+    
+    /* ============================================================
+       البطاقات الإحصائية - قابلة للنقر
+       ============================================================ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      border: 1px solid var(--gray-light);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .stat-card .stat-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .stat-card .stat-info {
+      flex: 1;
+    }
+    
+    .stat-card .stat-label {
+      font-size: 13px;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .stat-card .stat-number {
+      font-size: 30px;
+      font-weight: 900;
+      margin: 4px 0;
+      letter-spacing: -0.5px;
+      color: var(--dark);
+    }
+    
+    .stat-card .stat-number.primary { color: var(--primary); }
+    .stat-card .stat-number.success { color: var(--success); }
+    .stat-card .stat-number.danger { color: var(--danger); }
+    .stat-card .stat-number.warning { color: var(--warning); }
+    
+    .stat-card .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    
+    .stat-card .stat-icon.primary {
+      background: var(--primary-bg);
+      color: var(--primary);
+    }
+    .stat-card .stat-icon.success {
+      background: rgba(25, 135, 84, 0.1);
+      color: var(--success);
+    }
+    .stat-card .stat-icon.danger {
+      background: rgba(220, 53, 69, 0.1);
+      color: var(--danger);
+    }
+    .stat-card .stat-icon.warning {
+      background: rgba(255, 193, 7, 0.1);
+      color: var(--warning);
+    }
+    
+    .stat-card .stat-sub {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+    
+    .stat-card .stat-sub .highlight {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .stat-card .stat-click-hint {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 8px;
+      opacity: 0.6;
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover .stat-click-hint {
+      opacity: 1;
+      color: var(--primary);
+    }
+    
+    /* ============================================================
+       التفاصيل الموسعة (عند النقر على البطاقة)
+       ============================================================ */
+    .detail-panel {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--gray-light);
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      animation: slideDown 0.4s ease;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .detail-panel .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--gray-light);
+    }
+    
+    .detail-panel .detail-header h5 {
+      font-weight: 700;
+      color: var(--dark);
+    }
+    
+    .detail-panel .detail-header h5 i {
+      color: var(--primary);
+      margin-left: 10px;
+    }
+    
+    .detail-panel .detail-body {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .detail-panel .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    
+    .detail-panel .detail-row:last-child {
+      border-bottom: none;
+    }
+    
+    .detail-panel .detail-label {
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .detail-panel .detail-value {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .detail-panel .detail-value.primary { color: var(--primary); }
+    .detail-panel .detail-value.success { color: var(--success); }
+    .detail-panel .detail-value.danger { color: var(--danger); }
+    .detail-panel .detail-value.warning { color: var(--warning); }
+    
+    .btn-close-detail {
+      background: var(--gray-light);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--gray);
+    }
+    
+    .btn-close-detail:hover {
+      background: var(--danger);
+      color: var(--white);
+    }
+    
+    /* ============================================================
+       الجداول
+       ============================================================ */
+    .table-container {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 0;
+      border: 1px solid var(--gray-light);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    
+    .table-container:hover {
+      border-color: var(--primary-light);
+    }
+    
+    .table-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--primary-bg);
+    }
+    
+    .table-header h6 {
+      font-weight: 700;
+      font-size: 16px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--dark);
+    }
+    
+    .table-header h6 i {
+      color: var(--primary);
+    }
+    
+    .table-tools {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .table-tools .search-box {
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      color: var(--dark);
+      width: 220px;
+      font-size: 13px;
+      transition: var(--transition);
+    }
+    
+    .table-tools .search-box:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    
+    .table-tools .count-badge {
+      background: var(--primary-bg);
+      color: var(--primary);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    .table-responsive {
+      padding: 0;
+    }
+    
+    .table {
+      margin: 0;
+      font-size: 13px;
+    }
+    
+    .table thead th {
+      background: var(--light);
+      border-bottom: 2px solid var(--gray-light);
+      color: var(--gray);
+      font-weight: 700;
+      padding: 14px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .table tbody td {
+      padding: 12px 16px;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--gray-light);
+      color: var(--dark);
+    }
+    
+    .table tbody tr:hover {
+      background: var(--primary-bg);
+    }
+    
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    /* ============================================================
+       الأزرار المخصصة
+       ============================================================ */
+    .btn-group-custom {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    
+    .btn-sm-custom {
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      border: none;
+      transition: var(--transition);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+    
+    .btn-sm-custom:hover {
+      transform: scale(1.05);
+    }
+    
+    .btn-sm-custom.btn-view {
+      background: var(--primary-bg);
+      color: var(--primary);
+    }
+    .btn-sm-custom.btn-view:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .btn-sm-custom.btn-ban {
+      background: rgba(220, 53, 69, 0.1);
+      color: var(--danger);
+    }
+    .btn-sm-custom.btn-ban:hover {
+      background: var(--danger);
+      color: var(--white);
+    }
+    
+    .btn-sm-custom.btn-unban {
+      background: var(--primary-bg);
+      color: var(--primary);
+    }
+    .btn-sm-custom.btn-unban:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .btn-sm-custom.btn-edit {
+      background: rgba(255, 193, 7, 0.15);
+      color: var(--warning);
+    }
+    .btn-sm-custom.btn-edit:hover {
+      background: var(--warning);
+      color: var(--dark);
+    }
+    
+    .btn-sm-custom.btn-approve {
+      background: rgba(25, 135, 84, 0.1);
+      color: var(--success);
+    }
+    .btn-sm-custom.btn-approve:hover {
+      background: var(--success);
+      color: var(--white);
+    }
+    
+    .btn-sm-custom.btn-reject {
+      background: rgba(220, 53, 69, 0.1);
+      color: var(--danger);
+    }
+    .btn-sm-custom.btn-reject:hover {
+      background: var(--danger);
+      color: var(--white);
+    }
+    
+    .btn-sm-custom.btn-toggle {
+      background: var(--primary-bg);
+      color: var(--primary);
+    }
+    .btn-sm-custom.btn-toggle:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .btn-sm-custom.btn-delete {
+      background: rgba(220, 53, 69, 0.1);
+      color: var(--danger);
+    }
+    .btn-sm-custom.btn-delete:hover {
+      background: var(--danger);
+      color: var(--white);
+    }
+    
+    .btn-sm-custom.btn-success {
+      background: rgba(25, 135, 84, 0.1);
+      color: var(--success);
+    }
+    .btn-sm-custom.btn-success:hover {
+      background: var(--success);
+      color: var(--white);
+    }
+    
+    .btn-create {
+      background: var(--primary);
+      border: none;
+      padding: 10px 24px;
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-weight: 600;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+    
+    .btn-create:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--primary-glow);
+      color: var(--white);
+    }
+    
+    /* ============================================================
+       الحالات
+       ============================================================ */
+    .badge-status {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    
+    .badge-status.pending {
+      background: rgba(255, 193, 7, 0.15);
+      color: var(--warning);
+    }
+    .badge-status.completed {
+      background: rgba(25, 135, 84, 0.15);
+      color: var(--success);
+    }
+    .badge-status.rejected {
+      background: rgba(220, 53, 69, 0.15);
+      color: var(--danger);
+    }
+    .badge-status.refunded {
+      background: rgba(220, 53, 69, 0.1);
+      color: #e17055;
+    }
+    .badge-status.active {
+      background: rgba(25, 135, 84, 0.15);
+      color: var(--success);
+    }
+    .badge-status.inactive {
+      background: rgba(108, 117, 125, 0.15);
+      color: var(--gray);
+    }
+    
+    /* ============================================================
+       المودال
+       ============================================================ */
+    .modal-content {
+      border-radius: var(--radius);
+      border: none;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-header {
+      border-bottom: 1px solid var(--gray-light);
+      padding: 18px 24px;
+    }
+    
+    .modal-header .modal-title {
+      font-weight: 700;
+      color: var(--dark);
+    }
+    
+    .modal-header .modal-title i {
+      color: var(--primary);
+      margin-left: 10px;
+    }
+    
+    .modal-body {
+      padding: 24px;
+    }
+    
+    .modal-footer {
+      border-top: 1px solid var(--gray-light);
+      padding: 16px 24px;
+    }
+    
+    .form-label {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--dark);
+    }
+    
+    .form-control {
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    
+    /* ============================================================
+       الإشعارات
+       ============================================================ */
+    .alert {
+      border-radius: var(--radius-sm);
+      border: none;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      font-weight: 500;
+      border-right: 4px solid transparent;
+    }
+    
+    .alert-success {
+      background: rgba(25, 135, 84, 0.1);
+      color: var(--success);
+      border-right-color: var(--success);
+    }
+    
+    .alert-danger {
+      background: rgba(220, 53, 69, 0.1);
+      color: var(--danger);
+      border-right-color: var(--danger);
+    }
+    
+    .alert-info {
+      background: rgba(13, 110, 253, 0.1);
+      color: var(--primary);
+      border-right-color: var(--primary);
+    }
+    
+    .alert-warning {
+      background: rgba(255, 193, 7, 0.1);
+      color: var(--warning);
+      border-right-color: var(--warning);
+    }
+    
+    /* ============================================================
+       التحميل
+       ============================================================ */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      gap: 20px;
+    }
+    
+    .loading-container .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--gray-light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .loading-container p {
+      color: var(--gray);
+      font-size: 16px;
+    }
+    
+    /* ============================================================
+       الحالة الفارغة
+       ============================================================ */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gray);
+    }
+    
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 15px;
+      opacity: 0.3;
+    }
+    
+    .empty-state h5 {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .empty-state p {
+      font-size: 14px;
+    }
+    
+    /* ============================================================
+       التجاوب مع الشاشات
+       ============================================================ */
+    @media (max-width: 992px) {
+      .sidebar {
+        min-height: auto;
+        height: auto;
+        position: relative;
+        border-left: none;
+        border-bottom: 1px solid var(--gray-light);
+      }
+      
+      .sidebar .nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        gap: 4px;
+      }
+      
+      .sidebar .nav-link {
+        padding: 8px 14px;
+        font-size: 13px;
+        margin: 0;
+        flex: 1 1 auto;
+        min-width: 80px;
+        justify-content: center;
+      }
+      
+      .sidebar .nav-link i {
+        margin-left: 0;
+        margin-right: 0;
+      }
+      
+      .sidebar .nav-link .nav-text {
+        display: none;
+      }
+      
+      .sidebar-header .logo {
+        font-size: 22px;
+      }
+      
+      .main-content {
+        padding: 15px 18px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+      }
+      
+      .stat-card .stat-number {
+        font-size: 22px;
+      }
+      
+      .page-title {
+        font-size: 20px;
+      }
+      
+      .table-tools .search-box {
+        width: 150px;
+      }
+      
+      .table-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      
+      .table-tools {
+        flex-wrap: wrap;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      
+      .stat-card {
+        padding: 14px 16px;
+      }
+      
+      .stat-card .stat-number {
+        font-size: 18px;
+      }
+      
+      .stat-card .stat-label {
+        font-size: 11px;
+      }
+      
+      .stat-card .stat-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+      }
+      
+      .page-title {
+        font-size: 17px;
+      }
+      
+      .page-title small {
+        display: none;
+      }
+      
+      .main-content {
+        padding: 10px 12px;
+      }
+      
+      .table tbody td {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+      
+      .table thead th {
+        padding: 10px 10px;
+        font-size: 10px;
+      }
+      
+      .btn-sm-custom {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      
+      .table-tools .search-box {
+        width: 100%;
+      }
+      
+      .btn-create {
+        padding: 8px 16px;
+        font-size: 12px;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .page-title .title-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+    }
+    
+    /* ============================================================
+       Scrollbar مخصص
+       ============================================================ */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--light);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-light);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container-fluid p-0">
-        <div class="row g-0">
-            <!-- ============================================================
-            الشريط الجانبي
-            ============================================================ -->
-            <div class="col-md-3 col-lg-2 sidebar">
-                <div class="logo">
-                    <i class="fas fa-bolt"></i> ICHANCY
-                </div>
-                <div class="subtitle">⚡ لوحة الإدارة المتقدمة</div>
-
-                <nav class="nav flex-column">
-                    <a class="nav-link active" onclick="loadPage('dashboard')" data-page="dashboard">
-                        <i class="fas fa-chart-pie"></i>
-                        <span class="nav-text">لوحة التحكم</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('users')" data-page="users">
-                        <i class="fas fa-users"></i>
-                        <span class="nav-text">المستخدمين</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('transactions')" data-page="transactions">
-                        <i class="fas fa-exchange-alt"></i>
-                        <span class="nav-text">المعاملات</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('withdrawals')" data-page="withdrawals">
-                        <i class="fas fa-hand-holding-usd"></i>
-                        <span class="nav-text">طلبات السحب</span>
-                        <span class="badge-count" id="withdrawBadge">0</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('payments')" data-page="payments">
-                        <i class="fas fa-credit-card"></i>
-                        <span class="nav-text">طلبات الدفع</span>
-                        <span class="badge-count" id="paymentBadge">0</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('gift_codes')" data-page="gift_codes">
-                        <i class="fas fa-gift"></i>
-                        <span class="nav-text">أكواد الهدية</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('referrals')" data-page="referrals">
-                        <i class="fas fa-link"></i>
-                        <span class="nav-text">الإحالات</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('settings')" data-page="settings">
-                        <i class="fas fa-cog"></i>
-                        <span class="nav-text">الإعدادات</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('blocked')" data-page="blocked">
-                        <i class="fas fa-ban"></i>
-                        <span class="nav-text">الأرقام المحظورة</span>
-                    </a>
-                    <a class="nav-link" onclick="loadPage('report')" data-page="report">
-                        <i class="fas fa-file-alt"></i>
-                        <span class="nav-text">التقارير</span>
-                    </a>
-                </nav>
-            </div>
-
-            <!-- ============================================================
-            المحتوى الرئيسي
-            ============================================================ -->
-            <div class="col-md-9 col-lg-10 main-content">
-                <!-- الهيدر -->
-                <div class="page-header">
-                    <h2 class="page-title" id="pageTitle">
-                        <span class="icon"><i class="fas fa-chart-pie"></i></span>
-                        لوحة التحكم
-                        <small>نظرة عامة</small>
-                    </h2>
-                    <button class="btn-refresh" onclick="refreshCurrentPage()">
-                        <i class="fas fa-sync-alt"></i>
-                        تحديث
-                    </button>
-                </div>
-
-                <!-- منطقة المحتوى -->
-                <div id="contentArea">
-                    <div class="loading-container">
-                        <div class="spinner"></div>
-                        <p>جاري تحميل البيانات...</p>
-                    </div>
-                </div>
-            </div>
+  <div class="container-fluid p-0">
+    <div class="row g-0">
+      <!-- ============================================================
+      الشريط الجانبي
+      ============================================================ -->
+      <div class="col-md-3 col-lg-2 sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <i class="fas fa-bolt"></i> ICHANCY
+          </div>
+          <div class="subtitle">⚡ لوحة الإدارة المتقدمة</div>
         </div>
+
+        <nav class="nav flex-column">
+          <a class="nav-link active" onclick="loadPage('dashboard')" data-page="dashboard">
+            <i class="fas fa-chart-pie"></i>
+            <span class="nav-text">لوحة التحكم</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('users')" data-page="users">
+            <i class="fas fa-users"></i>
+            <span class="nav-text">المستخدمين</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('transactions')" data-page="transactions">
+            <i class="fas fa-exchange-alt"></i>
+            <span class="nav-text">المعاملات</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('withdrawals')" data-page="withdrawals">
+            <i class="fas fa-hand-holding-usd"></i>
+            <span class="nav-text">طلبات السحب</span>
+            <span class="badge-count" id="withdrawBadge">0</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('payments')" data-page="payments">
+            <i class="fas fa-credit-card"></i>
+            <span class="nav-text">طلبات الدفع</span>
+            <span class="badge-count" id="paymentBadge">0</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('gift_codes')" data-page="gift_codes">
+            <i class="fas fa-gift"></i>
+            <span class="nav-text">أكواد الهدية</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('referrals')" data-page="referrals">
+            <i class="fas fa-link"></i>
+            <span class="nav-text">الإحالات</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('settings')" data-page="settings">
+            <i class="fas fa-cog"></i>
+            <span class="nav-text">الإعدادات</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('blocked')" data-page="blocked">
+            <i class="fas fa-ban"></i>
+            <span class="nav-text">الأرقام المحظورة</span>
+          </a>
+          <a class="nav-link" onclick="loadPage('report')" data-page="report">
+            <i class="fas fa-file-alt"></i>
+            <span class="nav-text">التقارير</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <i class="fas fa-shield-alt me-1"></i> v3.0.0
+        </div>
+      </div>
+
+      <!-- ============================================================
+      المحتوى الرئيسي
+      ============================================================ -->
+      <div class="col-md-9 col-lg-10 main-content">
+        <!-- الهيدر -->
+        <div class="page-header">
+          <h2 class="page-title" id="pageTitle">
+            <span class="title-icon"><i class="fas fa-chart-pie"></i></span>
+            <span class="title-text">لوحة التحكم</span>
+            <small>نظرة عامة</small>
+          </h2>
+          <div class="header-actions">
+            <button class="btn-refresh" onclick="refreshCurrentPage()">
+              <i class="fas fa-sync-alt"></i>
+              تحديث
+            </button>
+          </div>
+        </div>
+
+        <!-- منطقة المحتوى -->
+        <div id="contentArea">
+          <div class="loading-container">
+            <div class="spinner"></div>
+            <p>جاري تحميل البيانات...</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- ============================================================
-    السكريبتات
-    ============================================================ -->
-    <script>
-        // ============================================================
-        // التكوين
-        // ============================================================
+  <!-- ============================================================
+  المودال
+  ============================================================ -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalTitle">
+            <i class="fas fa-edit"></i> تعديل
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+        </div>
+        <div class="modal-body" id="editModalBody">
+          <!-- يتم تحميل المحتوى ديناميكياً -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="editModalSave">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // ⚠️ ضع رابط التطبيق هنا
-        const APP_URL = 'https://script.google.com/macros/s/AKfycbz1ZgZHC7SV5BNJS8rRG_y5sX6-EKqcx8Mttib2UAjjnp1w3tNXFsrzLoF8LNteN4BF/exec';
+  <!-- ============================================================
+  السكريبتات
+  ============================================================ -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script>
+    // ============================================================
+    // التكوين الأساسي
+    // ============================================================
 
-        // معرف المشرف
-        const ADMIN_ID = '7011476249';
+    // ⚠️ قم بتغيير هذا الرابط إلى رابط التطبيق الخاص بك
+    const APP_URL = 'https://script.google.com/macros/s/AKfycbzj7xorEZk1CbmTu-tXJjpC-HO-8yemwKcSjidalKS7oAdUPBRV_oqhujh97Thb3R4R/exec';
 
-        let currentPage = 'dashboard';
-        let dbInstance = null;
-        let isLoading = false;
+    // ⚠️ قم بتغيير هذا المعرف إلى معرف المشرف الخاص بك
+    const ADMIN_ID = '7011476249';
 
-        // ============================================================
-        // دوال الاتصال بالـ API
-        // ============================================================
+    let currentPage = 'dashboard';
+    let dbInstance = null;
+    let isLoading = false;
+    let currentDetailData = null;
 
-        async function fetchData(action, params = {}) {
-            const url = new URL(APP_URL);
-            url.searchParams.append('action', action);
-            url.searchParams.append('userId', ADMIN_ID);
+    // ============================================================
+    // دوال الاتصال بـ API
+    // ============================================================
 
-            Object.keys(params).forEach(key => {
-                if (params[key] !== null && params[key] !== undefined) {
-                    url.searchParams.append(key, params[key]);
-                }
-            });
+    async function apiCall(action, params = {}) {
+      const url = new URL(APP_URL);
+      url.searchParams.append('action', action);
+      url.searchParams.append('userId', ADMIN_ID);
 
-            try {
-                const response = await fetch(url.toString());
-                const data = await response.json();
+      Object.keys(params).forEach(key => {
+        if (params[key] !== null && params[key] !== undefined) {
+          url.searchParams.append(key, params[key]);
+        }
+      });
 
-                if (data.error) {
-                    throw new Error(data.error);
-                }
+      try {
+        const response = await fetch(url.toString());
+        const data = await response.json();
 
-                return data;
-            } catch (error) {
-                console.error('API Error:', error);
-                showError('⚠️ حدث خطأ في الاتصال: ' + error.message);
-                throw error;
-            }
+        if (data.error) {
+          throw new Error(data.error);
         }
 
-        // ============================================================
-        // تحميل قاعدة البيانات
-        // ============================================================
-
-        async function loadDatabase() {
-            try {
-                // 1. جلب البيانات من الخلف
-                const result = await fetchData('get_data');
-
-                if (!result.success) {
-                    throw new Error(result.error || 'فشل تحميل البيانات');
-                }
-
-                // 2. فك تشفير Base64
-                const binaryString = atob(result.data);
-                const bytes = new Uint8Array(binaryString.length);
-                for (let i = 0; i < binaryString.length; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                }
-
-                // 3. تحميل sql.js
-                const SQL = await initSqlJs({
-                    locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}`
-                });
-
-                // 4. إنشاء قاعدة البيانات
-                dbInstance = new SQL.Database(bytes);
-
-                return true;
-
-            } catch (error) {
-                console.error('خطأ في تحميل قاعدة البيانات:', error);
-                showError('❌ فشل تحميل قاعدة البيانات: ' + error.message);
-                return false;
-            }
+        if (!data.success) {
+          throw new Error(data.error || 'فشلت العملية');
         }
 
-        // ============================================================
-        // تنفيذ استعلام
-        // ============================================================
+        return data;
+      } catch (error) {
+        console.error('API Error:', error);
+        showAlert('danger', '⚠️ ' + error.message);
+        throw error;
+      }
+    }
 
-        function executeQuery(query) {
-            if (!dbInstance) {
-                throw new Error('قاعدة البيانات غير محملة');
-            }
-            try {
-                const result = dbInstance.exec(query);
-                return result;
-            } catch (error) {
-                console.error('خطأ في الاستعلام:', error);
-                throw error;
-            }
+    // ============================================================
+    // تحميل قاعدة البيانات
+    // ============================================================
+
+    async function loadDatabase() {
+      try {
+        const result = await apiCall('get_data');
+
+        // فك تشفير Base64
+        const binaryString = atob(result.data);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
         }
 
-        // ============================================================
-        // دوال العرض
-        // ============================================================
+        // تحميل sql.js
+        const SQL = await initSqlJs({
+          locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}`
+        });
 
-        function showError(message) {
-            const area = document.getElementById('contentArea');
-            area.innerHTML = `
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    ${message}
-                    <br><br>
-                    <button class="btn btn-primary btn-sm" onclick="refreshCurrentPage()">
-                        <i class="fas fa-redo"></i> إعادة المحاولة
-                    </button>
-                </div>
+        dbInstance = new SQL.Database(bytes);
+        return true;
+
+      } catch (error) {
+        console.error('خطأ في تحميل قاعدة البيانات:', error);
+        showAlert('danger', '❌ فشل تحميل قاعدة البيانات: ' + error.message);
+        return false;
+      }
+    }
+
+    // ============================================================
+    // تنفيذ استعلام
+    // ============================================================
+
+    function executeQuery(query) {
+      if (!dbInstance) {
+        throw new Error('قاعدة البيانات غير محملة');
+      }
+      try {
+        return dbInstance.exec(query);
+      } catch (error) {
+        console.error('خطأ في الاستعلام:', error);
+        throw error;
+      }
+    }
+
+    // ============================================================
+    // تنفيذ استعلام مع تحديث (للوظائف الإدارية)
+    // ============================================================
+
+    async function executeUpdate(action, params = {}) {
+      const result = await apiCall(action, params);
+
+      // إعادة تحميل قاعدة البيانات بعد التحديث
+      if (result.data) {
+        const binaryString = atob(result.data);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const SQL = await initSqlJs({
+          locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}`
+        });
+        dbInstance = new SQL.Database(bytes);
+      }
+
+      return result;
+    }
+
+    // ============================================================
+    // دوال العرض الأساسية
+    // ============================================================
+
+    function showAlert(type, message) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+      alertDiv.role = 'alert';
+      alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="إغلاق"></button>
             `;
-        }
 
-        function showLoading() {
-            document.getElementById('contentArea').innerHTML = `
+      const container = document.querySelector('.main-content');
+      container.insertBefore(alertDiv, container.firstChild);
+
+      setTimeout(() => {
+        if (alertDiv.parentNode) {
+          alertDiv.remove();
+        }
+      }, 5000);
+    }
+
+    function showLoading() {
+      document.getElementById('contentArea').innerHTML = `
                 <div class="loading-container">
                     <div class="spinner"></div>
                     <p>جاري تحميل البيانات...</p>
                 </div>
             `;
-        }
+    }
 
-        function formatCurrency(amount) {
-            if (!amount && amount !== 0) return '0';
-            return Number(amount).toLocaleString('ar-EG');
-        }
+    function formatCurrency(amount) {
+      if (!amount && amount !== 0) return '0';
+      return Number(amount).toLocaleString('ar-EG');
+    }
 
-        function formatDate(dateStr) {
-            if (!dateStr) return '-';
-            try {
-                const date = new Date(dateStr);
-                return date.toLocaleString('ar-EG', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            } catch {
-                return dateStr;
-            }
-        }
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      try {
+        const date = new Date(dateStr);
+        return date.toLocaleString('ar-EG', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch {
+        return dateStr;
+      }
+    }
 
-        function getStatusBadge(status) {
-            const map = {
-                'pending': '<span class="badge-status pending">⏳ قيد المعالجة</span>',
-                'completed': '<span class="badge-status completed">✅ مكتمل</span>',
-                'rejected': '<span class="badge-status rejected">❌ مرفوض</span>',
-                'active': '<span class="badge-status active">✅ مفعل</span>',
-                'inactive': '<span class="badge-status inactive">❌ معطل</span>'
-            };
-            return map[status] || `<span class="badge-status pending">${status}</span>`;
-        }
+    function getStatusBadge(status) {
+      const map = {
+        'pending': '<span class="badge-status pending">⏳ قيد المعالجة</span>',
+        'completed': '<span class="badge-status completed">✅ مكتمل</span>',
+        'rejected': '<span class="badge-status rejected">❌ مرفوض</span>',
+        'refunded': '<span class="badge-status refunded">🔄 مسترجع</span>',
+        'active': '<span class="badge-status active">✅ مفعل</span>',
+        'inactive': '<span class="badge-status inactive">❌ معطل</span>'
+      };
+      return map[status] || `<span class="badge-status pending">${status}</span>`;
+    }
 
-        function truncate(str, len = 12) {
-            if (!str) return '-';
-            return str.length > len ? str.substring(0, len) + '...' : str;
-        }
+    function truncate(str, len = 12) {
+      if (!str) return '-';
+      return str.length > len ? str.substring(0, len) + '...' : str;
+    }
 
-        // ============================================================
-        // تحميل الصفحات
-        // ============================================================
+    // ============================================================
+    // عرض التفاصيل الكاملة (عند النقر على بطاقة)
+    // ============================================================
 
-        async function loadPage(page) {
-            if (isLoading) return;
-            isLoading = true;
+    function showDetailPanel(title, data, fields) {
+      const panel = document.createElement('div');
+      panel.className = 'detail-panel';
+      panel.id = 'detailPanel';
 
-            currentPage = page;
+      let rows = '';
+      fields.forEach(field => {
+        const value = data[field.key] !== undefined ? data[field.key] : '-';
+        const valueClass = field.class || '';
+        rows += `
+                    <div class="detail-row">
+                        <span class="detail-label">${field.label}</span>
+                        <span class="detail-value ${valueClass}">${value}</span>
+                    </div>
+                `;
+      });
 
-            // تحديث الشريط الجانبي
-            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            const activeLink = document.querySelector(`.sidebar .nav-link[data-page="${page}"]`);
-            if (activeLink) activeLink.classList.add('active');
+      panel.innerHTML = `
+                <div class="detail-header">
+                    <h5><i class="fas fa-info-circle"></i> ${title}</h5>
+                    <button class="btn-close-detail" onclick="closeDetailPanel()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="detail-body">
+                    ${rows}
+                </div>
+            `;
 
-            // تحديث العنوان
-            const titles = {
-                'dashboard': { icon: 'fa-chart-pie', label: 'لوحة التحكم', sub: 'نظرة عامة' },
-                'users': { icon: 'fa-users', label: 'المستخدمين', sub: 'إدارة المستخدمين' },
-                'transactions': { icon: 'fa-exchange-alt', label: 'المعاملات', sub: 'سجل المعاملات' },
-                'withdrawals': { icon: 'fa-hand-holding-usd', label: 'طلبات السحب', sub: 'إدارة طلبات السحب' },
-                'payments': { icon: 'fa-credit-card', label: 'طلبات الدفع', sub: 'إدارة طلبات الدفع' },
-                'gift_codes': { icon: 'fa-gift', label: 'أكواد الهدية', sub: 'إدارة الأكواد' },
-                'referrals': { icon: 'fa-link', label: 'الإحالات', sub: 'نظام الإحالات' },
-                'settings': { icon: 'fa-cog', label: 'الإعدادات', sub: 'إعدادات النظام' },
-                'blocked': { icon: 'fa-ban', label: 'الأرقام المحظورة', sub: 'إدارة الحظر' },
-                'report': { icon: 'fa-file-alt', label: 'التقارير', sub: 'تقارير شاملة' }
-            };
+      // إزالة اللوحة السابقة إذا وجدت
+      const existing = document.getElementById('detailPanel');
+      if (existing) existing.remove();
 
-            const info = titles[page] || titles.dashboard;
-            document.getElementById('pageTitle').innerHTML = `
-                <span class="icon"><i class="fas ${info.icon}"></i></span>
-                ${info.label}
+      // إدراج اللوحة بعد الهيدر
+      const header = document.querySelector('.page-header');
+      header.parentNode.insertBefore(panel, header.nextSibling);
+
+      // تمرير إلى اللوحة
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeDetailPanel() {
+      const panel = document.getElementById('detailPanel');
+      if (panel) panel.remove();
+    }
+
+    // ============================================================
+    // تحميل الصفحات
+    // ============================================================
+
+    async function loadPage(page) {
+      if (isLoading) return;
+      isLoading = true;
+
+      currentPage = page;
+      closeDetailPanel();
+
+      // تحديث الشريط الجانبي
+      document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      const activeLink = document.querySelector(`.sidebar .nav-link[data-page="${page}"]`);
+      if (activeLink) activeLink.classList.add('active');
+
+      // تحديث العنوان
+      const titles = {
+        'dashboard': { icon: 'fa-chart-pie', label: 'لوحة التحكم', sub: 'نظرة عامة' },
+        'users': { icon: 'fa-users', label: 'المستخدمين', sub: 'إدارة المستخدمين' },
+        'transactions': { icon: 'fa-exchange-alt', label: 'المعاملات', sub: 'سجل المعاملات' },
+        'withdrawals': { icon: 'fa-hand-holding-usd', label: 'طلبات السحب', sub: 'إدارة طلبات السحب' },
+        'payments': { icon: 'fa-credit-card', label: 'طلبات الدفع', sub: 'إدارة طلبات الدفع' },
+        'gift_codes': { icon: 'fa-gift', label: 'أكواد الهدية', sub: 'إدارة الأكواد' },
+        'referrals': { icon: 'fa-link', label: 'الإحالات', sub: 'نظام الإحالات' },
+        'settings': { icon: 'fa-cog', label: 'الإعدادات', sub: 'إعدادات النظام' },
+        'blocked': { icon: 'fa-ban', label: 'الأرقام المحظورة', sub: 'إدارة الحظر' },
+        'report': { icon: 'fa-file-alt', label: 'التقارير', sub: 'تقارير شاملة' }
+      };
+
+      const info = titles[page] || titles.dashboard;
+      document.getElementById('pageTitle').innerHTML = `
+                <span class="title-icon"><i class="fas ${info.icon}"></i></span>
+                <span class="title-text">${info.label}</span>
                 <small>${info.sub}</small>
             `;
 
-            // تحميل المحتوى
-            showLoading();
+      showLoading();
 
-            try {
-                // التأكد من تحميل قاعدة البيانات
-                if (!dbInstance) {
-                    const loaded = await loadDatabase();
-                    if (!loaded) {
-                        isLoading = false;
-                        return;
-                    }
-                }
-
-                switch (page) {
-                    case 'dashboard':
-                        await loadDashboard();
-                        break;
-                    case 'users':
-                        await loadUsers();
-                        break;
-                    case 'transactions':
-                        await loadTransactions();
-                        break;
-                    case 'withdrawals':
-                        await loadWithdrawals();
-                        break;
-                    case 'payments':
-                        await loadPaymentRequests();
-                        break;
-                    case 'gift_codes':
-                        await loadGiftCodes();
-                        break;
-                    case 'referrals':
-                        await loadReferrals();
-                        break;
-                    case 'settings':
-                        await loadSettings();
-                        break;
-                    case 'blocked':
-                        await loadBlocked();
-                        break;
-                    case 'report':
-                        await loadReport();
-                        break;
-                }
-            } catch (error) {
-                showError('حدث خطأ في تحميل الصفحة: ' + error.message);
-            }
-
+      try {
+        if (!dbInstance) {
+          const loaded = await loadDatabase();
+          if (!loaded) {
             isLoading = false;
+            return;
+          }
         }
 
-        function refreshCurrentPage() {
-            loadPage(currentPage);
+        switch (page) {
+          case 'dashboard':
+            await loadDashboard();
+            break;
+          case 'users':
+            await loadUsers();
+            break;
+          case 'transactions':
+            await loadTransactions();
+            break;
+          case 'withdrawals':
+            await loadWithdrawals();
+            break;
+          case 'payments':
+            await loadPaymentRequests();
+            break;
+          case 'gift_codes':
+            await loadGiftCodes();
+            break;
+          case 'referrals':
+            await loadReferrals();
+            break;
+          case 'settings':
+            await loadSettings();
+            break;
+          case 'blocked':
+            await loadBlocked();
+            break;
+          case 'report':
+            await loadReport();
+            break;
         }
+      } catch (error) {
+        document.getElementById('contentArea').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        حدث خطأ في تحميل الصفحة: ${error.message}
+                        <br>
+                        <button class="btn btn-primary btn-sm mt-2" onclick="refreshCurrentPage()">
+                            <i class="fas fa-redo"></i> إعادة المحاولة
+                        </button>
+                    </div>
+                `;
+      }
 
-        // ============================================================
-        // 1. لوحة التحكم
-        // ============================================================
+      isLoading = false;
+    }
 
-        async function loadDashboard() {
-            // جلب الإحصائيات
-            const statsResult = executeQuery(`
+    function refreshCurrentPage() {
+      loadPage(currentPage);
+    }
+
+    // ============================================================
+    // 1. لوحة التحكم
+    // ============================================================
+
+    async function loadDashboard() {
+      const statsResult = executeQuery(`
                 SELECT 
                     (SELECT COUNT(*) FROM users) as total_users,
                     (SELECT COUNT(*) FROM users WHERE is_banned = 0) as active_users,
@@ -829,115 +1523,91 @@
                     (SELECT COUNT(*) FROM payment_requests WHERE status = 'pending') as pending_payments
             `);
 
-            const stats = statsResult[0]?.values[0] || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      const stats = statsResult[0]?.values[0] || [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-            // تحديث الأرقام في الشريط الجانبي
-            document.getElementById('withdrawBadge').textContent = stats[5] || 0;
-            document.getElementById('paymentBadge').textContent = stats[9] || 0;
+      document.getElementById('withdrawBadge').textContent = stats[5] || 0;
+      document.getElementById('paymentBadge').textContent = stats[9] || 0;
 
-            // جلب أحدث المستخدمين
-            const usersResult = executeQuery(`
-                SELECT user_id, username, wallet_balance, created_at 
-                FROM users 
-                ORDER BY created_at DESC 
-                LIMIT 8
-            `);
+      // بيانات التفاصيل للبطاقات
+      const detailData = {
+        total_users: { total: stats[0] || 0, active: stats[1] || 0, ichancy: stats[2] || 0 },
+        payments: { total: stats[3] || 0, count: 0 },
+        withdrawals: { total: stats[4] || 0, pending: stats[5] || 0 },
+        referrals: { total: stats[6] || 0, commission: stats[7] || 0 },
+        blocked: { count: stats[8] || 0 }
+      };
 
-            // جلب أحدث المعاملات
-            const txsResult = executeQuery(`
-                SELECT user_id, type, amount, created_at 
-                FROM transactions 
-                ORDER BY created_at DESC 
-                LIMIT 8
-            `);
-
-            const users = usersResult[0]?.values || [];
-            const txs = txsResult[0]?.values || [];
-
-            const typeMap = {
-                'payment': '💰 شحن',
-                'ichancy_deposit': '📤 شحن IChancy',
-                'ichancy_withdraw': '📥 سحب IChancy',
-                'gift_sent': '🎁 هدية مرسلة',
-                'gift_received': '🎁 هدية مستقبلة',
-                'gift_code': '🎫 كود هدية',
-                'withdrawal': '💸 سحب',
-                'manual_payment': '📋 دفع يدوي',
-                'admin_balance_edit': '✏️ تعديل إداري'
-            };
-
-            let html = `
+      let html = `
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showUserDetails()">
                         <div class="stat-content">
-                            <div>
+                            <div class="stat-info">
                                 <div class="stat-label">👥 إجمالي المستخدمين</div>
                                 <div class="stat-number primary">${stats[0] || 0}</div>
+                                <div class="stat-sub">🆕 نشطين: <span class="highlight">${stats[1] || 0}</span></div>
+                                <div class="stat-click-hint"><i class="fas fa-chevron-left"></i> اضغط للتفاصيل</div>
                             </div>
                             <div class="stat-icon primary"><i class="fas fa-users"></i></div>
                         </div>
                     </div>
-                    <div class="stat-card">
+
+                    <div class="stat-card" onclick="showPaymentDetails()">
                         <div class="stat-content">
-                            <div>
-                                <div class="stat-label">✅ المستخدمين النشطين</div>
-                                <div class="stat-number success">${stats[1] || 0}</div>
-                            </div>
-                            <div class="stat-icon success"><i class="fas fa-user-check"></i></div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-content">
-                            <div>
-                                <div class="stat-label">🎮 حسابات IChancy</div>
-                                <div class="stat-number primary">${stats[2] || 0}</div>
-                            </div>
-                            <div class="stat-icon primary"><i class="fas fa-gamepad"></i></div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-content">
-                            <div>
-                                <div class="stat-label">⏳ طلبات سحب معلقة</div>
-                                <div class="stat-number warning">${stats[5] || 0}</div>
-                            </div>
-                            <div class="stat-icon warning"><i class="fas fa-clock"></i></div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-content">
-                            <div>
+                            <div class="stat-info">
                                 <div class="stat-label">💰 إجمالي الشحنات</div>
                                 <div class="stat-number success">${formatCurrency(stats[3])}</div>
+                                <div class="stat-sub">SYP</div>
+                                <div class="stat-click-hint"><i class="fas fa-chevron-left"></i> اضغط للتفاصيل</div>
                             </div>
                             <div class="stat-icon success"><i class="fas fa-arrow-down"></i></div>
                         </div>
                     </div>
-                    <div class="stat-card">
+
+                    <div class="stat-card" onclick="showWithdrawalDetails()">
                         <div class="stat-content">
-                            <div>
+                            <div class="stat-info">
                                 <div class="stat-label">📤 إجمالي السحوبات</div>
                                 <div class="stat-number danger">${formatCurrency(stats[4])}</div>
+                                <div class="stat-sub">⏳ معلقة: <span class="highlight" style="color:var(--warning);">${stats[5] || 0}</span></div>
+                                <div class="stat-click-hint"><i class="fas fa-chevron-left"></i> اضغط للتفاصيل</div>
                             </div>
                             <div class="stat-icon danger"><i class="fas fa-arrow-up"></i></div>
                         </div>
                     </div>
-                    <div class="stat-card">
+
+                    <div class="stat-card" onclick="showReferralDetails()">
                         <div class="stat-content">
-                            <div>
+                            <div class="stat-info">
                                 <div class="stat-label">👥 إجمالي الإحالات</div>
                                 <div class="stat-number primary">${stats[6] || 0}</div>
+                                <div class="stat-sub">💰 عمولات: <span class="highlight">${formatCurrency(stats[7])}</span></div>
+                                <div class="stat-click-hint"><i class="fas fa-chevron-left"></i> اضغط للتفاصيل</div>
                             </div>
                             <div class="stat-icon primary"><i class="fas fa-link"></i></div>
                         </div>
                     </div>
-                    <div class="stat-card">
+
+                    <div class="stat-card" onclick="showBlockedDetails()">
                         <div class="stat-content">
-                            <div>
+                            <div class="stat-info">
                                 <div class="stat-label">🚫 الأرقام المحظورة</div>
                                 <div class="stat-number danger">${stats[8] || 0}</div>
+                                <div class="stat-sub">تم حظرها تلقائياً</div>
+                                <div class="stat-click-hint"><i class="fas fa-chevron-left"></i> اضغط للتفاصيل</div>
                             </div>
                             <div class="stat-icon danger"><i class="fas fa-ban"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" onclick="showPendingDetails()">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-label">⏳ طلبات معلقة</div>
+                                <div class="stat-number warning">${(stats[5] || 0) + (stats[9] || 0)}</div>
+                                <div class="stat-sub">سحب: ${stats[5] || 0} | دفع: ${stats[9] || 0}</div>
+                                <div class="stat-click-hint"><i class="fas fa-chevron-left"></i> اضغط للتفاصيل</div>
+                            </div>
+                            <div class="stat-icon warning"><i class="fas fa-clock"></i></div>
                         </div>
                     </div>
                 </div>
@@ -946,8 +1616,8 @@
                     <div class="col-md-6">
                         <div class="table-container">
                             <div class="table-header">
-                                <h6><i class="fas fa-users" style="color:var(--primary);"></i> أحدث المستخدمين</h6>
-                                <span class="count">${users.length} مستخدم</span>
+                                <h6><i class="fas fa-users"></i> أحدث المستخدمين</h6>
+                                <span class="count-badge">آخر 8</span>
                             </div>
                             <div class="table-responsive" style="max-height:250px;overflow-y:auto;">
                                 <table class="table">
@@ -957,21 +1627,29 @@
                                     <tbody>
             `;
 
-            if (users.length === 0) {
-                html += `<tr><td colspan="3" class="text-center text-muted">لا يوجد مستخدمين</td></tr>`;
-            } else {
-                users.forEach(row => {
-                    html += `
-                        <tr>
-                            <td><code>${truncate(row[0], 10)}</code></td>
-                            <td style="color:var(--success);">${formatCurrency(row[2])}</td>
-                            <td>${formatDate(row[3])}</td>
-                        </tr>
-                    `;
-                });
-            }
+      const usersResult = executeQuery(`
+                    SELECT user_id, wallet_balance, created_at 
+                    FROM users 
+                    ORDER BY created_at DESC 
+                    LIMIT 8
+                `);
+      const users = usersResult[0]?.values || [];
 
-            html += `
+      if (users.length === 0) {
+        html += `<tr><td colspan="3" class="text-center text-muted">لا يوجد مستخدمين</td></tr>`;
+      } else {
+        users.forEach(row => {
+          html += `
+                            <tr>
+                                <td><code>${truncate(row[0], 10)}</code></td>
+                                <td style="color:var(--success);">${formatCurrency(row[1])}</td>
+                                <td>${formatDate(row[2])}</td>
+                            </tr>
+                        `;
+        });
+      }
+
+      html += `
                                     </tbody>
                                 </table>
                             </div>
@@ -980,8 +1658,8 @@
                     <div class="col-md-6">
                         <div class="table-container">
                             <div class="table-header">
-                                <h6><i class="fas fa-exchange-alt" style="color:var(--primary);"></i> آخر المعاملات</h6>
-                                <span class="count">${txs.length} معاملة</span>
+                                <h6><i class="fas fa-exchange-alt"></i> آخر المعاملات</h6>
+                                <span class="count-badge">آخر 8</span>
                             </div>
                             <div class="table-responsive" style="max-height:250px;overflow-y:auto;">
                                 <table class="table">
@@ -991,859 +1669,1512 @@
                                     <tbody>
             `;
 
-            if (txs.length === 0) {
-                html += `<tr><td colspan="3" class="text-center text-muted">لا توجد معاملات</td></tr>`;
-            } else {
-                txs.forEach(row => {
-                    const type = typeMap[row[1]] || row[1];
-                    const amount = row[2] || 0;
-                    html += `
-                        <tr>
-                            <td><code>${truncate(row[0], 10)}</code></td>
-                            <td>${type}</td>
-                            <td class="${amount >= 0 ? 'text-success' : 'text-danger'}">${formatCurrency(amount)}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 2. المستخدمين
-        // ============================================================
-
-        async function loadUsers() {
-            const result = executeQuery(`
-                SELECT user_id, username, full_name, wallet_balance, 
-                       has_ichancy_account, ichancy_username, created_at, is_banned
-                FROM users 
-                ORDER BY created_at DESC 
-                LIMIT 50
-            `);
-
-            const users = result[0]?.values || [];
-
-            let html = `
-                <div class="table-container">
-                    <div class="table-header">
-                        <h6><i class="fas fa-users" style="color:var(--primary);"></i> قائمة المستخدمين</h6>
-                        <span class="count">${users.length} مستخدم</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>المعرف</th>
-                                    <th>اسم المستخدم</th>
-                                    <th>الرصيد</th>
-                                    <th>IChancy</th>
-                                    <th>الحالة</th>
-                                    <th>التسجيل</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (users.length === 0) {
-                html += `<tr><td colspan="7" class="text-center text-muted">لا يوجد مستخدمين</td></tr>`;
-            } else {
-                users.forEach((row, index) => {
-                    const isBanned = row[7] == 1;
-                    const hasIchancy = row[4] == 1;
-
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><code>${truncate(row[0], 12)}</code></td>
-                            <td>${row[1] || '-'}</td>
-                            <td style="color:var(--success);">${formatCurrency(row[3])}</td>
-                            <td>${hasIchancy ? '✅' : '❌'}</td>
-                            <td>${isBanned ? '🚫 محظور' : '✅ نشط'}</td>
-                            <td>${formatDate(row[6])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 3. المعاملات
-        // ============================================================
-
-        async function loadTransactions() {
-            const result = executeQuery(`
-                SELECT id, user_id, type, amount, method, status, 
-                       transaction_id, bonus_amount, created_at
-                FROM transactions 
-                ORDER BY created_at DESC 
-                LIMIT 100
-            `);
-
-            const txs = result[0]?.values || [];
-
-            const typeMap = {
-                'payment': '💰 شحن',
-                'ichancy_deposit': '📤 شحن IChancy',
-                'ichancy_withdraw': '📥 سحب IChancy',
-                'gift_sent': '🎁 هدية مرسلة',
-                'gift_received': '🎁 هدية مستقبلة',
-                'gift_code': '🎫 كود هدية',
-                'withdrawal': '💸 سحب',
-                'manual_payment': '📋 دفع يدوي',
-                'admin_balance_edit': '✏️ تعديل إداري'
-            };
-
-            let html = `
-                <div class="table-container">
-                    <div class="table-header">
-                        <h6><i class="fas fa-exchange-alt" style="color:var(--primary);"></i> سجل المعاملات</h6>
-                        <span class="count">${txs.length} معاملة</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>المستخدم</th>
-                                    <th>النوع</th>
-                                    <th>المبلغ</th>
-                                    <th>الطريقة</th>
-                                    <th>الحالة</th>
-                                    <th>البونص</th>
-                                    <th>التاريخ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (txs.length === 0) {
-                html += `<tr><td colspan="8" class="text-center text-muted">لا توجد معاملات</td></tr>`;
-            } else {
-                txs.forEach((row, index) => {
-                    const type = typeMap[row[2]] || row[2];
-                    const amount = row[3] || 0;
-                    const isPositive = amount >= 0;
-
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><code>${truncate(row[1], 10)}</code></td>
-                            <td>${type}</td>
-                            <td class="${isPositive ? 'text-success' : 'text-danger'}">${formatCurrency(amount)}</td>
-                            <td>${row[4] || '-'}</td>
-                            <td>${getStatusBadge(row[5])}</td>
-                            <td>${row[7] > 0 ? formatCurrency(row[7]) : '-'}</td>
-                            <td>${formatDate(row[8])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 4. طلبات السحب
-        // ============================================================
-
-        async function loadWithdrawals() {
-            const result = executeQuery(`
-                SELECT w.id, w.user_id, w.amount, m.name as method_name, 
-                       w.status, w.created_at
-                FROM withdrawal_requests w
-                LEFT JOIN withdraw_methods m ON w.method_id = m.id
-                ORDER BY w.created_at DESC 
-                LIMIT 50
-            `);
-
-            const withdrawals = result[0]?.values || [];
-
-            let html = `
-                <div class="table-container">
-                    <div class="table-header">
-                        <h6><i class="fas fa-hand-holding-usd" style="color:var(--primary);"></i> طلبات السحب</h6>
-                        <span class="count">${withdrawals.length} طلب</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>المستخدم</th>
-                                    <th>المبلغ</th>
-                                    <th>الطريقة</th>
-                                    <th>الحالة</th>
-                                    <th>التاريخ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (withdrawals.length === 0) {
-                html += `<tr><td colspan="6" class="text-center text-muted">لا توجد طلبات سحب</td></tr>`;
-            } else {
-                withdrawals.forEach((row, index) => {
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><code>${truncate(row[1], 10)}</code></td>
-                            <td style="color:var(--warning);">${formatCurrency(row[2])}</td>
-                            <td>${row[3] || '-'}</td>
-                            <td>${getStatusBadge(row[4])}</td>
-                            <td>${formatDate(row[5])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 5. طلبات الدفع
-        // ============================================================
-
-        async function loadPaymentRequests() {
-            const result = executeQuery(`
-                SELECT p.id, p.user_id, p.amount, m.name as method_name, 
-                       p.transaction_id, p.status, p.created_at
-                FROM payment_requests p
-                LEFT JOIN manual_payment_methods m ON p.method_id = m.id
-                ORDER BY p.created_at DESC 
-                LIMIT 50
-            `);
-
-            const payments = result[0]?.values || [];
-
-            let html = `
-                <div class="table-container">
-                    <div class="table-header">
-                        <h6><i class="fas fa-credit-card" style="color:var(--primary);"></i> طلبات الدفع</h6>
-                        <span class="count">${payments.length} طلب</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>المستخدم</th>
-                                    <th>المبلغ</th>
-                                    <th>الطريقة</th>
-                                    <th>رقم العملية</th>
-                                    <th>الحالة</th>
-                                    <th>التاريخ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (payments.length === 0) {
-                html += `<tr><td colspan="7" class="text-center text-muted">لا توجد طلبات دفع</td></tr>`;
-            } else {
-                payments.forEach((row, index) => {
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><code>${truncate(row[1], 10)}</code></td>
-                            <td style="color:var(--success);">${formatCurrency(row[2])}</td>
-                            <td>${row[3] || '-'}</td>
-                            <td><code>${truncate(row[4], 8)}</code></td>
-                            <td>${getStatusBadge(row[5])}</td>
-                            <td>${formatDate(row[6])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 6. أكواد الهدية
-        // ============================================================
-
-        async function loadGiftCodes() {
-            const result = executeQuery(`
-                SELECT id, code, amount, max_uses, used_count, 
-                       is_active, expires_at, created_at
-                FROM gift_codes 
-                ORDER BY created_at DESC 
-                LIMIT 50
-            `);
-
-            const codes = result[0]?.values || [];
-
-            let html = `
-                <div class="table-container">
-                    <div class="table-header">
-                        <h6><i class="fas fa-gift" style="color:var(--primary);"></i> أكواد الهدية</h6>
-                        <span class="count">${codes.length} كود</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>الكود</th>
-                                    <th>القيمة</th>
-                                    <th>الاستخدامات</th>
-                                    <th>الحالة</th>
-                                    <th>الصلاحية</th>
-                                    <th>التاريخ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (codes.length === 0) {
-                html += `<tr><td colspan="7" class="text-center text-muted">لا توجد أكواد هدية</td></tr>`;
-            } else {
-                codes.forEach((row, index) => {
-                    const isActive = row[5] == 1;
-
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><code style="color:var(--primary-light);">${row[1]}</code></td>
-                            <td style="color:var(--success);">${formatCurrency(row[2])}</td>
-                            <td>${row[4]}/${row[3]}</td>
-                            <td>${getStatusBadge(isActive ? 'active' : 'inactive')}</td>
-                            <td>${row[6] ? formatDate(row[6]) : 'لا يوجد'}</td>
-                            <td>${formatDate(row[7])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 7. الإحالات
-        // ============================================================
-
-        async function loadReferrals() {
-            const referralsResult = executeQuery(`
-                SELECT r.referrer_id, r.referred_id, r.commission_earned, r.created_at,
-                       u.username as referrer_name, u2.username as referred_name
-                FROM referrals r
-                LEFT JOIN users u ON r.referrer_id = u.user_id
-                LEFT JOIN users u2 ON r.referred_id = u2.user_id
-                ORDER BY r.created_at DESC 
-                LIMIT 50
-            `);
-
-            const topResult = executeQuery(`
-                SELECT referrer_id, COUNT(*) as count, SUM(commission_earned) as total_commission
-                FROM referrals
-                GROUP BY referrer_id
-                ORDER BY count DESC
-                LIMIT 10
-            `);
-
-            const referrals = referralsResult[0]?.values || [];
-            const top = topResult[0]?.values || [];
-
-            let html = `
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="table-container">
-                            <div class="table-header">
-                                <h6><i class="fas fa-trophy" style="color:var(--warning);"></i> أفضل المحيلين</h6>
-                                <span class="count">${top.length} محيل</span>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr><th>#</th><th>المحيل</th><th>الإحالات</th><th>العمولة</th></tr>
-                                    </thead>
-                                    <tbody>
-            `;
-
-            if (top.length === 0) {
-                html += `<tr><td colspan="4" class="text-center text-muted">لا توجد إحالات</td></tr>`;
-            } else {
-                top.forEach((row, index) => {
-                    html += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><code>${truncate(row[0], 10)}</code></td>
-                            <td><span class="badge bg-primary">${row[1]}</span></td>
-                            <td style="color:var(--warning);">${formatCurrency(row[2])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="table-container">
-                            <div class="table-header">
-                                <h6><i class="fas fa-list" style="color:var(--primary);"></i> آخر الإحالات</h6>
-                                <span class="count">${referrals.length} إحالة</span>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr><th>المحيل</th><th>المحال</th><th>العمولة</th><th>التاريخ</th></tr>
-                                    </thead>
-                                    <tbody>
-            `;
-
-            if (referrals.length === 0) {
-                html += `<tr><td colspan="4" class="text-center text-muted">لا توجد إحالات</td></tr>`;
-            } else {
-                referrals.slice(0, 20).forEach(row => {
-                    html += `
-                        <tr>
-                            <td><code>${truncate(row[0], 8)}</code></td>
-                            <td><code>${truncate(row[1], 8)}</code></td>
-                            <td style="color:var(--warning);">${formatCurrency(row[2])}</td>
-                            <td>${formatDate(row[3])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 8. الإعدادات
-        // ============================================================
-
-        async function loadSettings() {
-            const result = executeQuery(`
-                SELECT setting_key, setting_value 
-                FROM system_settings
-            `);
-
-            const settings = {};
-            (result[0]?.values || []).forEach(row => {
-                settings[row[0]] = row[1];
-            });
-
-            let html = `
-                <div class="table-container">
-                    <div class="table-header">
-                        <h6><i class="fas fa-cog" style="color:var(--primary);"></i> إعدادات النظام</h6>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr><th>الإعداد</th><th>القيمة</th></tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            const settingsList = [
-                { key: 'referral_commission', label: 'عمولة الإحالة %' },
-                { key: 'min_deposit', label: 'الحد الأدنى للشحن' },
-                { key: 'min_withdraw', label: 'الحد الأدنى للسحب' },
-                { key: 'weekly_percentage', label: 'نسبة الجائزة الأسبوعية %' },
-                { key: 'monthly_percentage', label: 'نسبة الجائزة الشهرية %' },
-                { key: 'welcome_bonus_enabled', label: 'البونص الترحيبي' },
-                { key: 'welcome_bonus_percent', label: 'نسبة البونص الترحيبي %' }
-            ];
-
-            if (Object.keys(settings).length === 0) {
-                html += `<tr><td colspan="2" class="text-center text-muted">لا توجد إعدادات</td></tr>`;
-            } else {
-                settingsList.forEach(item => {
-                    const value = settings[item.key] || '0';
-                    html += `
-                        <tr>
-                            <td>${item.label}</td>
-                            <td><strong>${value}</strong></td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            // إضافة طرق الدفع
-            const methodsResult = executeQuery(`
-                SELECT name, enabled 
-                FROM manual_payment_methods 
-                ORDER BY name
-            `);
-
-            const methods = methodsResult[0]?.values || [];
-
-            html += `
-                <div class="table-container mt-3">
-                    <div class="table-header">
-                        <h6><i class="fas fa-credit-card" style="color:var(--success);"></i> طرق الدفع</h6>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr><th>الطريقة</th><th>الحالة</th></tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (methods.length === 0) {
-                html += `<tr><td colspan="2" class="text-center text-muted">لا توجد طرق دفع</td></tr>`;
-            } else {
-                methods.forEach(row => {
-                    const isEnabled = row[1] == 1;
-                    html += `
-                        <tr>
-                            <td>${row[0]}</td>
-                            <td>${getStatusBadge(isEnabled ? 'active' : 'inactive')}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            // إضافة طرق السحب
-            const withdrawResult = executeQuery(`
-                SELECT name, enabled 
-                FROM withdraw_methods 
-                ORDER BY name
-            `);
-
-            const withdraws = withdrawResult[0]?.values || [];
-
-            html += `
-                <div class="table-container mt-3">
-                    <div class="table-header">
-                        <h6><i class="fas fa-hand-holding-usd" style="color:var(--warning);"></i> طرق السحب</h6>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr><th>الطريقة</th><th>الحالة</th></tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (withdraws.length === 0) {
-                html += `<tr><td colspan="2" class="text-center text-muted">لا توجد طرق سحب</td></tr>`;
-            } else {
-                withdraws.forEach(row => {
-                    const isEnabled = row[1] == 1;
-                    html += `
-                        <tr>
-                            <td>${row[0]}</td>
-                            <td>${getStatusBadge(isEnabled ? 'active' : 'inactive')}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 9. الأرقام المحظورة
-        // ============================================================
-
-        async function loadBlocked() {
-            const result = executeQuery(`
-                SELECT txid, reason, date, user1_id, user2_id 
-                FROM blocked_txids 
-                ORDER BY blocked_at DESC
-            `);
-
-            const blocked = result[0]?.values || [];
-
-            let html = `
-                <div class="table-container">
-                    <div class="table-header">
-                        <h6><i class="fas fa-ban" style="color:var(--danger);"></i> الأرقام المحظورة</h6>
-                        <span class="count">${blocked.length} رقم</span>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>رقم العملية</th>
-                                    <th>السبب</th>
-                                    <th>التاريخ</th>
-                                    <th>المستخدم 1</th>
-                                    <th>المستخدم 2</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-
-            if (blocked.length === 0) {
-                html += `<tr><td colspan="5" class="text-center text-muted">لا توجد أرقام محظورة</td></tr>`;
-            } else {
-                blocked.forEach(row => {
-                    html += `
-                        <tr>
-                            <td><code style="color:var(--danger);">${row[0]}</code></td>
-                            <td>${row[1] || '-'}</td>
-                            <td>${row[2] || '-'}</td>
-                            <td><code>${truncate(row[3], 8)}</code></td>
-                            <td><code>${truncate(row[4], 8)}</code></td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // 10. التقارير
-        // ============================================================
-
-        async function loadReport() {
-            // جلب الإحصائيات
-            const statsResult = executeQuery(`
-                SELECT 
-                    (SELECT COUNT(*) FROM users) as total_users,
-                    (SELECT COUNT(*) FROM users WHERE is_banned = 0) as active_users,
-                    (SELECT COUNT(*) FROM users WHERE has_ichancy_account = 1) as ichancy_users,
-                    (SELECT SUM(amount) FROM transactions WHERE type = 'payment' AND status = 'completed') as total_payments,
-                    (SELECT SUM(amount) FROM withdrawal_requests WHERE status = 'completed') as total_withdrawals,
-                    (SELECT COUNT(*) FROM withdrawal_requests WHERE status = 'pending') as pending_withdrawals,
-                    (SELECT COUNT(*) FROM referrals) as total_referrals,
-                    (SELECT SUM(commission_earned) FROM referrals) as total_commission,
-                    (SELECT COUNT(*) FROM blocked_txids) as blocked_count
-            `);
-
-            const stats = statsResult[0]?.values[0] || [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-            // جلب آخر المعاملات
-            const txsResult = executeQuery(`
-                SELECT user_id, type, amount, created_at 
-                FROM transactions 
-                ORDER BY created_at DESC 
-                LIMIT 10
-            `);
-
-            const txs = txsResult[0]?.values || [];
-
-            // جلب الطلبات المعلقة
-            const pendingResult = executeQuery(`
-                SELECT user_id, amount, created_at 
-                FROM withdrawal_requests 
-                WHERE status = 'pending'
-                ORDER BY created_at DESC 
-                LIMIT 10
-            `);
-
-            const pending = pendingResult[0]?.values || [];
-
-            const typeMap = {
-                'payment': '💰 شحن',
-                'ichancy_deposit': '📤 شحن IChancy',
-                'ichancy_withdraw': '📥 سحب IChancy',
-                'gift_sent': '🎁 هدية مرسلة',
-                'gift_received': '🎁 هدية مستقبلة',
-                'gift_code': '🎫 كود هدية',
-                'withdrawal': '💸 سحب',
-                'manual_payment': '📋 دفع يدوي'
-            };
-
-            let html = `
-                <div class="row g-4">
-                    <div class="col-md-12">
-                        <div class="stat-card">
-                            <h6 style="color:var(--primary-light);"><i class="fas fa-file-alt" style="color:var(--primary);"></i> تقرير شامل</h6>
-                            <p class="text-muted">${new Date().toLocaleString('ar-EG')}</p>
-                            <hr style="border-color:var(--border-color);">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <p><strong>👥 إجمالي المستخدمين:</strong> <span style="color:var(--primary);">${stats[0] || 0}</span></p>
-                                    <p><strong>✅ المستخدمين النشطين:</strong> <span style="color:var(--success);">${stats[1] || 0}</span></p>
-                                    <p><strong>🎮 حسابات IChancy:</strong> <span style="color:var(--primary);">${stats[2] || 0}</span></p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>💰 إجمالي الشحنات:</strong> <span style="color:var(--success);">${formatCurrency(stats[3])} SYP</span></p>
-                                    <p><strong>📤 إجمالي السحوبات:</strong> <span style="color:var(--danger);">${formatCurrency(stats[4])} SYP</span></p>
-                                    <p><strong>👥 الإحالات:</strong> <span style="color:var(--primary);">${stats[6] || 0}</span></p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p><strong>⏳ طلبات سحب معلقة:</strong> <span style="color:var(--warning);">${stats[5] || 0}</span></p>
-                                    <p><strong>💰 إجمالي العمولات:</strong> <span style="color:var(--warning);">${formatCurrency(stats[7])} SYP</span></p>
-                                    <p><strong>🚫 الأرقام المحظورة:</strong> <span style="color:var(--danger);">${stats[8] || 0}</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="table-container">
-                            <div class="table-header">
-                                <h6><i class="fas fa-exchange-alt" style="color:var(--primary);"></i> آخر المعاملات</h6>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr><th>المستخدم</th><th>النوع</th><th>المبلغ</th><th>التاريخ</th></tr>
-                                    </thead>
-                                    <tbody>
-            `;
-
-            if (txs.length === 0) {
-                html += `<tr><td colspan="4" class="text-center text-muted">لا توجد معاملات</td></tr>`;
-            } else {
-                txs.forEach(row => {
-                    const type = typeMap[row[1]] || row[1];
-                    html += `
-                        <tr>
-                            <td><code>${truncate(row[0], 8)}</code></td>
-                            <td>${type}</td>
-                            <td class="${row[2] >= 0 ? 'text-success' : 'text-danger'}">${formatCurrency(row[2])}</td>
-                            <td>${formatDate(row[3])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="table-container">
-                            <div class="table-header">
-                                <h6><i class="fas fa-clock" style="color:var(--warning);"></i> طلبات سحب معلقة</h6>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr><th>المستخدم</th><th>المبلغ</th><th>التاريخ</th></tr>
-                                    </thead>
-                                    <tbody>
-            `;
-
-            if (pending.length === 0) {
-                html += `<tr><td colspan="3" class="text-center text-muted">لا توجد طلبات معلقة</td></tr>`;
-            } else {
-                pending.forEach(row => {
-                    html += `
-                        <tr>
-                            <td><code>${truncate(row[0], 8)}</code></td>
-                            <td style="color:var(--warning);">${formatCurrency(row[1])}</td>
-                            <td>${formatDate(row[2])}</td>
-                        </tr>
-                    `;
-                });
-            }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ============================================================
-        // التهيئة
-        // ============================================================
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPage('dashboard');
+      const typeMap = {
+        'payment': '💰 شحن',
+        'ichancy_deposit': '📤 شحن IChancy',
+        'ichancy_withdraw': '📥 سحب IChancy',
+        'gift_sent': '🎁 هدية مرسلة',
+        'gift_received': '🎁 هدية مستقبلة',
+        'gift_code': '🎫 كود هدية',
+        'withdrawal': '💸 سحب',
+        'manual_payment': '📋 دفع يدوي',
+        'admin_balance_edit': '✏️ تعديل إداري'
+      };
+
+      const txsResult = executeQuery(`
+                    SELECT user_id, type, amount, created_at 
+                    FROM transactions 
+                    ORDER BY created_at DESC 
+                    LIMIT 8
+                `);
+      const txs = txsResult[0]?.values || [];
+
+      if (txs.length === 0) {
+        html += `<tr><td colspan="3" class="text-center text-muted">لا توجد معاملات</td></tr>`;
+      } else {
+        txs.forEach(row => {
+          const type = typeMap[row[1]] || row[1];
+          html += `
+                            <tr>
+                                <td><code>${truncate(row[0], 10)}</code></td>
+                                <td>${type}</td>
+                                <td class="${row[2] >= 0 ? 'text-success' : 'text-danger'}">${formatCurrency(row[2])}</td>
+                            </tr>
+                        `;
         });
+      }
 
-        // جعل الدوال متاحة عالمياً
-        window.loadPage = loadPage;
-        window.refreshCurrentPage = refreshCurrentPage;
-    </script>
+      html += `
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // دوال عرض التفاصيل (عند النقر على البطاقات)
+    // ============================================================
+
+    function showUserDetails() {
+      const result = executeQuery(`
+                SELECT 
+                    COUNT(*) as total,
+                    SUM(CASE WHEN is_banned = 0 THEN 1 ELSE 0 END) as active,
+                    SUM(CASE WHEN has_ichancy_account = 1 THEN 1 ELSE 0 END) as ichancy,
+                    SUM(wallet_balance) as total_balance,
+                    AVG(wallet_balance) as avg_balance
+                FROM users
+            `);
+      const data = result[0]?.values[0] || [0, 0, 0, 0, 0];
+
+      showDetailPanel('📊 تفاصيل المستخدمين', {
+        'إجمالي المستخدمين': data[0] || 0,
+        'المستخدمين النشطين': data[1] || 0,
+        'حسابات IChancy': data[2] || 0,
+        'إجمالي الرصيد': formatCurrency(data[3]) + ' SYP',
+        'متوسط الرصيد': formatCurrency(data[4]) + ' SYP'
+      }, [
+        { key: 'إجمالي المستخدمين', label: '👥 إجمالي المستخدمين', class: 'primary' },
+        { key: 'المستخدمين النشطين', label: '✅ المستخدمين النشطين', class: 'success' },
+        { key: 'حسابات IChancy', label: '🎮 حسابات IChancy', class: 'primary' },
+        { key: 'إجمالي الرصيد', label: '💰 إجمالي الرصيد', class: 'success' },
+        { key: 'متوسط الرصيد', label: '📊 متوسط الرصيد', class: 'primary' }
+      ]);
+    }
+
+    function showPaymentDetails() {
+      const result = executeQuery(`
+                SELECT 
+                    COUNT(*) as count,
+                    SUM(amount) as total,
+                    AVG(amount) as avg,
+                    MAX(amount) as max,
+                    MIN(amount) as min
+                FROM transactions 
+                WHERE type = 'payment' AND status = 'completed'
+            `);
+      const data = result[0]?.values[0] || [0, 0, 0, 0, 0];
+
+      showDetailPanel('💰 تفاصيل الشحنات', {
+        'عدد العمليات': data[0] || 0,
+        'إجمالي المبلغ': formatCurrency(data[1]) + ' SYP',
+        'متوسط المبلغ': formatCurrency(data[2]) + ' SYP',
+        'أكبر مبلغ': formatCurrency(data[3]) + ' SYP',
+        'أقل مبلغ': formatCurrency(data[4]) + ' SYP'
+      }, [
+        { key: 'عدد العمليات', label: '📊 عدد العمليات', class: 'primary' },
+        { key: 'إجمالي المبلغ', label: '💰 إجمالي المبلغ', class: 'success' },
+        { key: 'متوسط المبلغ', label: '📈 متوسط المبلغ', class: 'primary' },
+        { key: 'أكبر مبلغ', label: '⬆️ أكبر مبلغ', class: 'success' },
+        { key: 'أقل مبلغ', label: '⬇️ أقل مبلغ', class: 'danger' }
+      ]);
+    }
+
+    function showWithdrawalDetails() {
+      const result = executeQuery(`
+                SELECT 
+                    COUNT(*) as count,
+                    SUM(amount) as total,
+                    AVG(amount) as avg,
+                    COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending,
+                    COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed,
+                    COUNT(CASE WHEN status = 'rejected' THEN 1 END) as rejected
+                FROM withdrawal_requests
+            `);
+      const data = result[0]?.values[0] || [0, 0, 0, 0, 0, 0];
+
+      showDetailPanel('📤 تفاصيل السحوبات', {
+        'عدد الطلبات': data[0] || 0,
+        'إجمالي المبلغ': formatCurrency(data[1]) + ' SYP',
+        'متوسط المبلغ': formatCurrency(data[2]) + ' SYP',
+        'قيد المعالجة': data[3] || 0,
+        'مكتملة': data[4] || 0,
+        'مرفوضة': data[5] || 0
+      }, [
+        { key: 'عدد الطلبات', label: '📊 عدد الطلبات', class: 'primary' },
+        { key: 'إجمالي المبلغ', label: '💰 إجمالي المبلغ', class: 'danger' },
+        { key: 'متوسط المبلغ', label: '📈 متوسط المبلغ', class: 'primary' },
+        { key: 'قيد المعالجة', label: '⏳ قيد المعالجة', class: 'warning' },
+        { key: 'مكتملة', label: '✅ مكتملة', class: 'success' },
+        { key: 'مرفوضة', label: '❌ مرفوضة', class: 'danger' }
+      ]);
+    }
+
+    function showReferralDetails() {
+      const result = executeQuery(`
+                SELECT 
+                    COUNT(*) as total,
+                    SUM(commission_earned) as total_commission,
+                    AVG(commission_earned) as avg_commission,
+                    COUNT(DISTINCT referrer_id) as referrers
+                FROM referrals
+            `);
+      const data = result[0]?.values[0] || [0, 0, 0, 0];
+
+      showDetailPanel('👥 تفاصيل الإحالات', {
+        'إجمالي الإحالات': data[0] || 0,
+        'إجمالي العمولات': formatCurrency(data[1]) + ' SYP',
+        'متوسط العمولة': formatCurrency(data[2]) + ' SYP',
+        'عدد المحيلين': data[3] || 0
+      }, [
+        { key: 'إجمالي الإحالات', label: '👥 إجمالي الإحالات', class: 'primary' },
+        { key: 'إجمالي العمولات', label: '💰 إجمالي العمولات', class: 'success' },
+        { key: 'متوسط العمولة', label: '📊 متوسط العمولة', class: 'primary' },
+        { key: 'عدد المحيلين', label: '👤 عدد المحيلين', class: 'primary' }
+      ]);
+    }
+
+    function showBlockedDetails() {
+      const result = executeQuery(`
+                SELECT 
+                    COUNT(*) as count,
+                    COUNT(DISTINCT user1_id) as users1,
+                    COUNT(DISTINCT user2_id) as users2
+                FROM blocked_txids
+            `);
+      const data = result[0]?.values[0] || [0, 0, 0];
+
+      showDetailPanel('🚫 تفاصيل الأرقام المحظورة', {
+        'إجمالي الأرقام': data[0] || 0,
+        'مستخدمين (1)': data[1] || 0,
+        'مستخدمين (2)': data[2] || 0
+      }, [
+        { key: 'إجمالي الأرقام', label: '🚫 إجمالي الأرقام', class: 'danger' },
+        { key: 'مستخدمين (1)', label: '👤 مستخدمين (1)', class: 'primary' },
+        { key: 'مستخدمين (2)', label: '👤 مستخدمين (2)', class: 'primary' }
+      ]);
+    }
+
+    function showPendingDetails() {
+      const result = executeQuery(`
+                SELECT 
+                    (SELECT COUNT(*) FROM withdrawal_requests WHERE status = 'pending') as withdrawals,
+                    (SELECT COUNT(*) FROM payment_requests WHERE status = 'pending') as payments
+            `);
+      const data = result[0]?.values[0] || [0, 0];
+
+      showDetailPanel('⏳ تفاصيل الطلبات المعلقة', {
+        'طلبات سحب معلقة': data[0] || 0,
+        'طلبات دفع معلقة': data[1] || 0,
+        'الإجمالي': (data[0] || 0) + (data[1] || 0)
+      }, [
+        { key: 'طلبات سحب معلقة', label: '📤 طلبات سحب معلقة', class: 'warning' },
+        { key: 'طلبات دفع معلقة', label: '📥 طلبات دفع معلقة', class: 'warning' },
+        { key: 'الإجمالي', label: '📊 الإجمالي', class: 'primary' }
+      ]);
+    }
+
+    // ============================================================
+    // 2. المستخدمين
+    // ============================================================
+
+    async function loadUsers() {
+      const result = executeQuery(`
+                    SELECT user_id, username, full_name, wallet_balance, 
+                           has_ichancy_account, ichancy_username, created_at, is_banned
+                    FROM users 
+                    ORDER BY created_at DESC 
+                    LIMIT 50
+                `);
+
+      const users = result[0]?.values || [];
+
+      let html = `
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h6><i class="fas fa-users"></i> قائمة المستخدمين</h6>
+                            <div class="table-tools">
+                                <input class="search-box" placeholder="🔍 بحث عن مستخدم..." onkeyup="searchTable(this.value, 'usersTable')">
+                                <span class="count-badge">${users.length} مستخدم</span>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="usersTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>المعرف</th>
+                                        <th>اسم المستخدم</th>
+                                        <th>الرصيد</th>
+                                        <th>IChancy</th>
+                                        <th>الحالة</th>
+                                        <th>التسجيل</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                `;
+
+      if (users.length === 0) {
+        html += `<tr><td colspan="8" class="text-center text-muted">لا يوجد مستخدمين</td></tr>`;
+      } else {
+        users.forEach((row, index) => {
+          const isBanned = row[7] == 1;
+          const hasIchancy = row[4] == 1;
+          const userId = row[0];
+
+          html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><code>${truncate(userId, 12)}</code></td>
+                                <td>${row[1] || '-'}</td>
+                                <td style="color:var(--success);">${formatCurrency(row[3])}</td>
+                                <td>${hasIchancy ? '✅' : '❌'}</td>
+                                <td>${isBanned ? '🚫 محظور' : '✅ نشط'}</td>
+                                <td>${formatDate(row[6])}</td>
+                                <td>
+                                    <div class="btn-group-custom">
+                                        <button class="btn-sm-custom btn-view" onclick="viewUser('${userId}')" title="عرض التقرير">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-sm-custom ${isBanned ? 'btn-unban' : 'btn-ban'}" 
+                                                onclick="toggleUserBan('${userId}')" 
+                                                title="${isBanned ? 'فك الحظر' : 'حظر'}">
+                                            <i class="fas fa-${isBanned ? 'unlock' : 'ban'}"></i>
+                                        </button>
+                                        <button class="btn-sm-custom btn-edit" onclick="editUserBalance('${userId}')" title="تعديل الرصيد">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+        });
+      }
+
+      html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // عرض تقرير المستخدم
+    // ============================================================
+
+    async function viewUser(userId) {
+      try {
+        const result = executeQuery(`
+                            SELECT * FROM users WHERE user_id = '${userId}'
+                        `);
+        const user = result[0]?.values[0];
+
+        if (!user) {
+          showAlert('danger', 'المستخدم غير موجود');
+          return;
+        }
+
+        // جلب إحصائيات المستخدم
+        const statsResult = executeQuery(`
+                            SELECT 
+                                (SELECT SUM(amount) FROM transactions WHERE user_id = '${userId}' AND type = 'payment' AND status = 'completed') as total_payments,
+                                (SELECT COUNT(*) FROM transactions WHERE user_id = '${userId}' AND type = 'payment' AND status = 'completed') as count_payments,
+                                (SELECT SUM(amount) FROM withdrawal_requests WHERE user_id = '${userId}' AND status = 'completed') as total_withdrawals,
+                                (SELECT COUNT(*) FROM withdrawal_requests WHERE user_id = '${userId}' AND status = 'completed') as count_withdrawals,
+                                (SELECT COUNT(*) FROM referrals WHERE referrer_id = '${userId}') as referrals_count,
+                                (SELECT SUM(commission_earned) FROM referrals WHERE referrer_id = '${userId}') as total_commission
+                        `);
+        const stats = statsResult[0]?.values[0] || [0, 0, 0, 0, 0, 0];
+
+        const isBanned = user[7] == 1;
+        const hasIchancy = user[4] == 1;
+
+        showDetailPanel(`👤 تقرير المستخدم ${userId}`, {
+          'المعرف': userId,
+          'اسم المستخدم': user[1] || '-',
+          'الاسم الكامل': user[2] || '-',
+          'الرصيد': formatCurrency(user[3]) + ' SYP',
+          'حالة IChancy': hasIchancy ? '✅ مفعل' : '❌ غير مفعل',
+          'اسم IChancy': user[5] || 'غير مسجل',
+          'الحالة': isBanned ? '🚫 محظور' : '✅ نشط',
+          'تاريخ التسجيل': formatDate(user[6]),
+          'إجمالي الشحنات': formatCurrency(stats[0]) + ' SYP',
+          'عدد الشحنات': stats[1] || 0,
+          'إجمالي السحوبات': formatCurrency(stats[2]) + ' SYP',
+          'عدد السحوبات': stats[3] || 0,
+          'عدد الإحالات': stats[4] || 0,
+          'العمولات المكتسبة': formatCurrency(stats[5]) + ' SYP'
+        }, [
+          { key: 'المعرف', label: '🆔 المعرف', class: 'primary' },
+          { key: 'اسم المستخدم', label: '👤 اسم المستخدم' },
+          { key: 'الاسم الكامل', label: '📝 الاسم الكامل' },
+          { key: 'الرصيد', label: '💰 الرصيد', class: 'success' },
+          { key: 'حالة IChancy', label: '🎮 حالة IChancy' },
+          { key: 'اسم IChancy', label: '👤 اسم IChancy' },
+          { key: 'الحالة', label: '📌 الحالة' },
+          { key: 'تاريخ التسجيل', label: '📅 تاريخ التسجيل' },
+          { key: 'إجمالي الشحنات', label: '📥 إجمالي الشحنات', class: 'success' },
+          { key: 'عدد الشحنات', label: '📊 عدد الشحنات' },
+          { key: 'إجمالي السحوبات', label: '📤 إجمالي السحوبات', class: 'danger' },
+          { key: 'عدد السحوبات', label: '📊 عدد السحوبات' },
+          { key: 'عدد الإحالات', label: '👥 عدد الإحالات' },
+          { key: 'العمولات المكتسبة', label: '💰 العمولات المكتسبة', class: 'warning' }
+        ]);
+
+        // إضافة أزرار الإجراءات داخل اللوحة
+        const panel = document.getElementById('detailPanel');
+        if (panel) {
+          const actionsDiv = document.createElement('div');
+          actionsDiv.className = 'mt-3 d-flex gap-2 flex-wrap';
+          actionsDiv.innerHTML = `
+                                <button class="btn btn-sm ${isBanned ? 'btn-success' : 'btn-danger'}" 
+                                        onclick="toggleUserBan('${userId}')">
+                                    <i class="fas fa-${isBanned ? 'unlock' : 'ban'}"></i>
+                                    ${isBanned ? 'فك الحظر' : 'حظر'}
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="editUserBalance('${userId}')">
+                                    <i class="fas fa-edit"></i> تعديل الرصيد
+                                </button>
+                                <button class="btn btn-sm btn-info" onclick="loadPage('transactions')">
+                                    <i class="fas fa-exchange-alt"></i> معاملات المستخدم
+                                </button>
+                            `;
+          panel.querySelector('.detail-body').appendChild(actionsDiv);
+        }
+
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    // ============================================================
+    // وظائف إدارة المستخدمين
+    // ============================================================
+
+    async function toggleUserBan(userId) {
+      if (!confirm('هل أنت متأكد من تغيير حالة الحظر؟')) return;
+
+      try {
+        await executeUpdate('update_ban', { userId });
+        showAlert('success', '✅ تم تغيير حالة المستخدم بنجاح');
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    async function editUserBalance(userId) {
+      const amount = prompt('💰 أدخل المبلغ (استخدم + للإضافة أو - للخصم):\nمثال: 1000 أو -500');
+      if (amount === null) return;
+
+      const value = parseFloat(amount);
+      if (isNaN(value)) {
+        showAlert('danger', '⚠️ الرجاء إدخال رقم صحيح');
+        return;
+      }
+
+      try {
+        await executeUpdate('update_balance', { userId, amount: value });
+        showAlert('success', `✅ تم تحديث الرصيد بنجاح`);
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    // ============================================================
+    // 3. المعاملات
+    // ============================================================
+
+    async function loadTransactions() {
+      const result = executeQuery(`
+                        SELECT id, user_id, type, amount, method, status, 
+                               transaction_id, bonus_amount, created_at
+                        FROM transactions 
+                        ORDER BY created_at DESC 
+                        LIMIT 100
+                    `);
+
+      const txs = result[0]?.values || [];
+
+      const typeMap = {
+        'payment': '💰 شحن',
+        'ichancy_deposit': '📤 شحن IChancy',
+        'ichancy_withdraw': '📥 سحب IChancy',
+        'gift_sent': '🎁 هدية مرسلة',
+        'gift_received': '🎁 هدية مستقبلة',
+        'gift_code': '🎫 كود هدية',
+        'withdrawal': '💸 سحب',
+        'manual_payment': '📋 دفع يدوي',
+        'admin_balance_edit': '✏️ تعديل إداري',
+        'withdrawal_refund': '🔄 استرداد سحب'
+      };
+
+      let html = `
+                        <div class="table-container">
+                            <div class="table-header">
+                                <h6><i class="fas fa-exchange-alt"></i> سجل المعاملات</h6>
+                                <div class="table-tools">
+                                    <input class="search-box" placeholder="🔍 بحث عن معاملة..." onkeyup="searchTable(this.value, 'transactionsTable')">
+                                    <span class="count-badge">${txs.length} معاملة</span>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table" id="transactionsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>المستخدم</th>
+                                            <th>النوع</th>
+                                            <th>المبلغ</th>
+                                            <th>الطريقة</th>
+                                            <th>الحالة</th>
+                                            <th>البونص</th>
+                                            <th>التاريخ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+
+      if (txs.length === 0) {
+        html += `<tr><td colspan="8" class="text-center text-muted">لا توجد معاملات</td></tr>`;
+      } else {
+        txs.forEach((row, index) => {
+          const type = typeMap[row[2]] || row[2];
+          const amount = row[3] || 0;
+          const isPositive = amount >= 0;
+
+          html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><code>${truncate(row[1], 10)}</code></td>
+                                <td>${type}</td>
+                                <td class="${isPositive ? 'text-success' : 'text-danger'}">${formatCurrency(amount)}</td>
+                                <td>${row[4] || '-'}</td>
+                                <td>${getStatusBadge(row[5])}</td>
+                                <td>${row[7] > 0 ? formatCurrency(row[7]) : '-'}</td>
+                                <td>${formatDate(row[8])}</td>
+                            </tr>
+                        `;
+        });
+      }
+
+      html += `
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // 4. طلبات السحب
+    // ============================================================
+
+    async function loadWithdrawals() {
+      const result = executeQuery(`
+                            SELECT w.id, w.user_id, w.amount, m.name as method_name, 
+                                   w.status, w.created_at
+                            FROM withdrawal_requests w
+                            LEFT JOIN withdraw_methods m ON w.method_id = m.id
+                            ORDER BY w.created_at DESC 
+                            LIMIT 50
+                        `);
+
+      const withdrawals = result[0]?.values || [];
+
+      let html = `
+                            <div class="table-container">
+                                <div class="table-header">
+                                    <h6><i class="fas fa-hand-holding-usd"></i> طلبات السحب</h6>
+                                    <div class="table-tools">
+                                        <span class="count-badge">${withdrawals.length} طلب</span>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>المستخدم</th>
+                                                <th>المبلغ</th>
+                                                <th>الطريقة</th>
+                                                <th>الحالة</th>
+                                                <th>التاريخ</th>
+                                                <th>الإجراءات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                        `;
+
+      if (withdrawals.length === 0) {
+        html += `<tr><td colspan="7" class="text-center text-muted">لا توجد طلبات سحب</td></tr>`;
+      } else {
+        withdrawals.forEach((row, index) => {
+          const isPending = row[4] === 'pending';
+          const id = row[0];
+
+          html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><code>${truncate(row[1], 10)}</code></td>
+                                <td style="color:var(--warning);">${formatCurrency(row[2])}</td>
+                                <td>${row[3] || '-'}</td>
+                                <td>${getStatusBadge(row[4])}</td>
+                                <td>${formatDate(row[5])}</td>
+                                <td>
+                                    ${isPending ? `
+                                    <div class="btn-group-custom">
+                                        <button class="btn-sm-custom btn-approve" onclick="approveWithdrawal(${id})" title="موافقة">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="btn-sm-custom btn-reject" onclick="rejectWithdrawal(${id})" title="رفض">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    ` : '<span style="color:var(--gray);font-size:12px;">معالج</span>'}
+                                </td>
+                            </tr>
+                        `;
+        });
+      }
+
+      html += `
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // وظائف إدارة طلبات السحب
+    // ============================================================
+
+    async function approveWithdrawal(id) {
+      if (!confirm('✅ هل أنت متأكد من الموافقة على طلب السحب؟')) return;
+
+      try {
+        await executeUpdate('update_withdrawal', { id, status: 'completed' });
+        showAlert('success', '✅ تمت الموافقة على طلب السحب');
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    async function rejectWithdrawal(id) {
+      if (!confirm('❌ هل أنت متأكد من رفض طلب السحب؟')) return;
+
+      try {
+        await executeUpdate('update_withdrawal', { id, status: 'rejected' });
+        showAlert('success', '❌ تم رفض طلب السحب');
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    // ============================================================
+    // 5. طلبات الدفع
+    // ============================================================
+
+    async function loadPaymentRequests() {
+      const result = executeQuery(`
+                                SELECT p.id, p.user_id, p.amount, m.name as method_name, 
+                                       p.transaction_id, p.status, p.created_at
+                                FROM payment_requests p
+                                LEFT JOIN manual_payment_methods m ON p.method_id = m.id
+                                ORDER BY p.created_at DESC 
+                                LIMIT 50
+                            `);
+
+      const payments = result[0]?.values || [];
+
+      let html = `
+                                <div class="table-container">
+                                    <div class="table-header">
+                                        <h6><i class="fas fa-credit-card"></i> طلبات الدفع</h6>
+                                        <div class="table-tools">
+                                            <span class="count-badge">${payments.length} طلب</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>المستخدم</th>
+                                                    <th>المبلغ</th>
+                                                    <th>الطريقة</th>
+                                                    <th>رقم العملية</th>
+                                                    <th>الحالة</th>
+                                                    <th>التاريخ</th>
+                                                    <th>الإجراءات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                            `;
+
+      if (payments.length === 0) {
+        html += `<tr><td colspan="8" class="text-center text-muted">لا توجد طلبات دفع</td></tr>`;
+      } else {
+        payments.forEach((row, index) => {
+          const isPending = row[5] === 'pending';
+          const id = row[0];
+
+          html += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td><code>${truncate(row[1], 10)}</code></td>
+                                    <td style="color:var(--success);">${formatCurrency(row[2])}</td>
+                                    <td>${row[3] || '-'}</td>
+                                    <td><code>${truncate(row[4], 8)}</code></td>
+                                    <td>${getStatusBadge(row[5])}</td>
+                                    <td>${formatDate(row[6])}</td>
+                                    <td>
+                                        ${isPending ? `
+                                        <div class="btn-group-custom">
+                                            <button class="btn-sm-custom btn-approve" onclick="approvePayment(${id})" title="موافقة">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="btn-sm-custom btn-reject" onclick="rejectPayment(${id})" title="رفض">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        ` : '<span style="color:var(--gray);font-size:12px;">معالج</span>'}
+                                    </td>
+                                </tr>
+                            `;
+        });
+      }
+
+      html += `
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // وظائف إدارة طلبات الدفع
+    // ============================================================
+
+    async function approvePayment(id) {
+      if (!confirm('✅ هل أنت متأكد من الموافقة على طلب الدفع؟')) return;
+
+      try {
+        await executeUpdate('update_payment', { id, status: 'completed' });
+        showAlert('success', '✅ تمت الموافقة على طلب الدفع');
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    async function rejectPayment(id) {
+      if (!confirm('❌ هل أنت متأكد من رفض طلب الدفع؟')) return;
+
+      try {
+        await executeUpdate('update_payment', { id, status: 'rejected' });
+        showAlert('success', '❌ تم رفض طلب الدفع');
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    // ============================================================
+    // 6. أكواد الهدية
+    // ============================================================
+
+    async function loadGiftCodes() {
+      const result = executeQuery(`
+                                    SELECT id, code, amount, max_uses, used_count, 
+                                           is_active, expires_at, created_at
+                                    FROM gift_codes 
+                                    ORDER BY created_at DESC 
+                                    LIMIT 50
+                                `);
+
+      const codes = result[0]?.values || [];
+
+      let html = `
+                                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                                    <h6 style="margin:0;color:var(--dark);">
+                                        <i class="fas fa-gift" style="color:var(--primary);"></i> أكواد الهدية
+                                    </h6>
+                                    <button class="btn-create" onclick="showCreateGiftCode()">
+                                        <i class="fas fa-plus"></i> إنشاء كود جديد
+                                    </button>
+                                </div>
+
+                                <div class="table-container">
+                                    <div class="table-header">
+                                        <div class="table-tools">
+                                            <input class="search-box" placeholder="🔍 بحث عن كود..." onkeyup="searchTable(this.value, 'giftTable')">
+                                            <span class="count-badge">${codes.length} كود</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table" id="giftTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>الكود</th>
+                                                    <th>القيمة</th>
+                                                    <th>الاستخدامات</th>
+                                                    <th>الحالة</th>
+                                                    <th>الصلاحية</th>
+                                                    <th>الإجراءات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                            `;
+
+      if (codes.length === 0) {
+        html += `<tr><td colspan="7" class="text-center text-muted">لا توجد أكواد هدية</td></tr>`;
+      } else {
+        codes.forEach((row, index) => {
+          const isActive = row[5] == 1;
+          const id = row[0];
+
+          html += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td><code style="font-weight:700;color:var(--primary);">${row[1]}</code></td>
+                                    <td style="color:var(--success);">${formatCurrency(row[2])}</td>
+                                    <td>${row[4]}/${row[3]}</td>
+                                    <td>${getStatusBadge(isActive ? 'active' : 'inactive')}</td>
+                                    <td>${row[6] ? formatDate(row[6]) : 'لا يوجد'}</td>
+                                    <td>
+                                        <div class="btn-group-custom">
+                                            <button class="btn-sm-custom btn-toggle" onclick="toggleGiftCode(${id})" title="${isActive ? 'تعطيل' : 'تفعيل'}">
+                                                <i class="fas fa-${isActive ? 'pause' : 'play'}"></i>
+                                            </button>
+                                            <button class="btn-sm-custom btn-delete" onclick="deleteGiftCode(${id})" title="حذف">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+        });
+      }
+
+      html += `
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // وظائف إدارة أكواد الهدية
+    // ============================================================
+
+    function showCreateGiftCode() {
+      const modal = new bootstrap.Modal(document.getElementById('editModal'));
+      document.getElementById('editModalTitle').innerHTML = '🎁 إنشاء كود هدية جديد';
+      document.getElementById('editModalBody').innerHTML = `
+                        <form id="createGiftForm">
+                            <div class="mb-3">
+                                <label class="form-label">💰 القيمة (SYP)</label>
+                                <input type="number" class="form-control" id="giftAmount" required min="1" placeholder="مثال: 5000">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">📊 عدد الاستخدامات المسموحة</label>
+                                <input type="number" class="form-control" id="giftMaxUses" value="1" min="1">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">⏰ مدة الصلاحية (أيام، 0 = بدون صلاحية)</label>
+                                <input type="number" class="form-control" id="giftExpiry" value="0" min="0">
+                            </div>
+                        </form>
+                    `;
+
+      document.getElementById('editModalSave').onclick = async function() {
+        const amount = parseFloat(document.getElementById('giftAmount').value);
+        const maxUses = parseInt(document.getElementById('giftMaxUses').value) || 1;
+        const expiresIn = parseInt(document.getElementById('giftExpiry').value) || 0;
+
+        if (!amount || amount <= 0) {
+          showAlert('danger', '⚠️ الرجاء إدخال قيمة صحيحة');
+          return;
+        }
+
+        try {
+          const result = await executeUpdate('create_gift_code', {
+            amount,
+            maxUses,
+            expiresIn: expiresIn > 0 ? expiresIn : null
+          });
+
+          if (result.code) {
+            showAlert('success', `✅ تم إنشاء الكود: <code>${result.code}</code>`);
+            modal.hide();
+            loadPage('gift_codes');
+          }
+        } catch (error) {
+          showAlert('danger', error.message);
+        }
+      };
+
+      modal.show();
+    }
+
+    async function toggleGiftCode(codeId) {
+      if (!confirm('هل أنت متأكد من تغيير حالة الكود؟')) return;
+
+      try {
+        await executeUpdate('toggle_gift_code', { codeId });
+        showAlert('success', '✅ تم تغيير حالة الكود');
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    async function deleteGiftCode(codeId) {
+      if (!confirm('⚠️ هل أنت متأكد من حذف هذا الكود؟ لا يمكن التراجع!')) return;
+
+      try {
+        await executeUpdate('delete_gift_code', { codeId });
+        showAlert('success', '✅ تم حذف الكود');
+        loadPage(currentPage);
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    // ============================================================
+    // 7. الإحالات
+    // ============================================================
+
+    async function loadReferrals() {
+      const referralsResult = executeQuery(`
+                                    SELECT r.referrer_id, r.referred_id, r.commission_earned, r.created_at,
+                                           u.username as referrer_name, u2.username as referred_name
+                                    FROM referrals r
+                                    LEFT JOIN users u ON r.referrer_id = u.user_id
+                                    LEFT JOIN users u2 ON r.referred_id = u2.user_id
+                                    ORDER BY r.created_at DESC 
+                                    LIMIT 50
+                                `);
+
+      const topResult = executeQuery(`
+                                    SELECT referrer_id, COUNT(*) as count, SUM(commission_earned) as total_commission
+                                    FROM referrals
+                                    GROUP BY referrer_id
+                                    ORDER BY count DESC
+                                    LIMIT 10
+                                `);
+
+      const referrals = referralsResult[0]?.values || [];
+      const top = topResult[0]?.values || [];
+
+      let html = `
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="table-container">
+                                            <div class="table-header">
+                                                <h6><i class="fas fa-trophy" style="color:var(--warning);"></i> أفضل المحيلين</h6>
+                                                <span class="count-badge">${top.length} محيل</span>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr><th>#</th><th>المحيل</th><th>الإحالات</th><th>العمولة</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                    `;
+
+      if (top.length === 0) {
+        html += `<tr><td colspan="4" class="text-center text-muted">لا توجد إحالات</td></tr>`;
+      } else {
+        top.forEach((row, index) => {
+          html += `
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td><code>${truncate(row[0], 10)}</code></td>
+                                            <td><span class="badge bg-primary">${row[1]}</span></td>
+                                            <td style="color:var(--warning);">${formatCurrency(row[2])}</td>
+                                        </tr>
+                                    `;
+        });
+      }
+
+      html += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="table-container">
+                                            <div class="table-header">
+                                                <h6><i class="fas fa-list" style="color:var(--primary);"></i> آخر الإحالات</h6>
+                                                <span class="count-badge">${referrals.length} إحالة</span>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr><th>المحيل</th><th>المحال</th><th>العمولة</th><th>التاريخ</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                    `;
+
+      if (referrals.length === 0) {
+        html += `<tr><td colspan="4" class="text-center text-muted">لا توجد إحالات</td></tr>`;
+      } else {
+        referrals.slice(0, 20).forEach(row => {
+          html += `
+                                        <tr>
+                                            <td><code>${truncate(row[0], 8)}</code></td>
+                                            <td><code>${truncate(row[1], 8)}</code></td>
+                                            <td style="color:var(--warning);">${formatCurrency(row[2])}</td>
+                                            <td>${formatDate(row[3])}</td>
+                                        </tr>
+                                    `;
+        });
+      }
+
+      html += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // 8. الإعدادات
+    // ============================================================
+
+    async function loadSettings() {
+      const result = executeQuery(`
+                                    SELECT setting_key, setting_value 
+                                    FROM system_settings
+                                `);
+
+      const settings = {};
+      (result[0]?.values || []).forEach(row => {
+        settings[row[0]] = row[1];
+      });
+
+      // جلب طرق الدفع
+      const methodsResult = executeQuery(`
+                                    SELECT id, name, enabled 
+                                    FROM manual_payment_methods 
+                                    ORDER BY name
+                                `);
+
+      const methods = methodsResult[0]?.values || [];
+
+      // جلب طرق السحب
+      const withdrawResult = executeQuery(`
+                                    SELECT id, name, enabled 
+                                    FROM withdraw_methods 
+                                    ORDER BY name
+                                `);
+
+      const withdraws = withdrawResult[0]?.values || [];
+
+      let html = `
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="table-container">
+                                            <div class="table-header">
+                                                <h6><i class="fas fa-cog"></i> إعدادات النظام</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr><th>الإعداد</th><th>القيمة</th><th>الإجراء</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                    `;
+
+      const settingsList = [
+        { key: 'referral_commission', label: 'عمولة الإحالة %' },
+        { key: 'min_deposit', label: 'الحد الأدنى للشحن' },
+        { key: 'min_withdraw', label: 'الحد الأدنى للسحب' },
+        { key: 'weekly_percentage', label: 'نسبة الجائزة الأسبوعية %' },
+        { key: 'monthly_percentage', label: 'نسبة الجائزة الشهرية %' },
+        { key: 'welcome_bonus_enabled', label: 'البونص الترحيبي' },
+        { key: 'welcome_bonus_percent', label: 'نسبة البونص الترحيبي %' },
+        { key: 'welcome_bonus_max_amount', label: 'الحد الأقصى للبونص' }
+      ];
+
+      if (Object.keys(settings).length === 0) {
+        html += `<tr><td colspan="3" class="text-center text-muted">لا توجد إعدادات</td></tr>`;
+      } else {
+        settingsList.forEach(item => {
+          const value = settings[item.key] || '0';
+          html += `
+                                        <tr>
+                                            <td>${item.label}</td>
+                                            <td><strong>${value}</strong></td>
+                                            <td>
+                                                <button class="btn-sm-custom btn-edit" onclick="editSetting('${item.key}', '${item.label}')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `;
+        });
+      }
+
+      html += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="table-container">
+                                            <div class="table-header">
+                                                <h6><i class="fas fa-credit-card" style="color:var(--success);"></i> طرق الدفع</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr><th>الطريقة</th><th>الحالة</th><th>الإجراء</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                    `;
+
+      if (methods.length === 0) {
+        html += `<tr><td colspan="3" class="text-center text-muted">لا توجد طرق دفع</td></tr>`;
+      } else {
+        methods.forEach(row => {
+          const isEnabled = row[2] == 1;
+          const id = row[0];
+          html += `
+                                        <tr>
+                                            <td>${row[1]}</td>
+                                            <td>${getStatusBadge(isEnabled ? 'active' : 'inactive')}</td>
+                                            <td>
+                                                <button class="btn-sm-custom ${isEnabled ? 'btn-toggle' : 'btn-approve'}" 
+                                                        onclick="togglePaymentMethod(${id})">
+                                                    <i class="fas fa-${isEnabled ? 'pause' : 'play'}"></i>
+                                                    ${isEnabled ? 'تعطيل' : 'تفعيل'}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `;
+        });
+      }
+
+      html += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="table-container mt-3">
+                                            <div class="table-header">
+                                                <h6><i class="fas fa-hand-holding-usd" style="color:var(--warning);"></i> طرق السحب</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr><th>الطريقة</th><th>الحالة</th><th>الإجراء</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                    `;
+
+      if (withdraws.length === 0) {
+        html += `<tr><td colspan="3" class="text-center text-muted">لا توجد طرق سحب</td></tr>`;
+      } else {
+        withdraws.forEach(row => {
+          const isEnabled = row[2] == 1;
+          const id = row[0];
+          html += `
+                                        <tr>
+                                            <td>${row[1]}</td>
+                                            <td>${getStatusBadge(isEnabled ? 'active' : 'inactive')}</td>
+                                            <td>
+                                                <button class="btn-sm-custom ${isEnabled ? 'btn-toggle' : 'btn-approve'}" 
+                                                        onclick="toggleWithdrawMethod(${id})">
+                                                    <i class="fas fa-${isEnabled ? 'pause' : 'play'}"></i>
+                                                    ${isEnabled ? 'تعطيل' : 'تفعيل'}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `;
+        });
+      }
+
+      html += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // وظائف إدارة الإعدادات
+    // ============================================================
+
+    function editSetting(key, label) {
+      const modal = new bootstrap.Modal(document.getElementById('editModal'));
+      document.getElementById('editModalTitle').innerHTML = `⚙️ تعديل: ${label}`;
+      document.getElementById('editModalBody').innerHTML = `
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">القيمة الجديدة</label>
+                                <input type="text" class="form-control" id="settingValue" placeholder="أدخل القيمة الجديدة">
+                            </div>
+                        </form>
+                    `;
+
+      document.getElementById('editModalSave').onclick = async function() {
+        const value = document.getElementById('settingValue').value.trim();
+        if (!value) {
+          showAlert('danger', '⚠️ الرجاء إدخال قيمة');
+          return;
+        }
+
+        try {
+          await executeUpdate('update_setting', { key, value });
+          showAlert('success', '✅ تم تحديث الإعداد');
+          modal.hide();
+          loadPage('settings');
+        } catch (error) {
+          showAlert('danger', error.message);
+        }
+      };
+
+      modal.show();
+    }
+
+    async function togglePaymentMethod(methodId) {
+      try {
+        await executeUpdate('toggle_payment_method', { methodId });
+        showAlert('success', '✅ تم تغيير حالة طريقة الدفع');
+        loadPage('settings');
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    async function toggleWithdrawMethod(methodId) {
+      try {
+        await executeUpdate('toggle_withdraw_method', { methodId });
+        showAlert('success', '✅ تم تغيير حالة طريقة السحب');
+        loadPage('settings');
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    // ============================================================
+    // 9. الأرقام المحظورة
+    // ============================================================
+
+    async function loadBlocked() {
+      const result = executeQuery(`
+                                    SELECT txid, reason, date, user1_id, user2_id 
+                                    FROM blocked_txids 
+                                    ORDER BY blocked_at DESC
+                                `);
+
+      const blocked = result[0]?.values || [];
+
+      let html = `
+                                <div class="table-container">
+                                    <div class="table-header">
+                                        <h6><i class="fas fa-ban" style="color:var(--danger);"></i> الأرقام المحظورة</h6>
+                                        <div class="table-tools">
+                                            <span class="count-badge" style="color:var(--danger);">${blocked.length} رقم</span>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>رقم العملية</th>
+                                                    <th>السبب</th>
+                                                    <th>التاريخ</th>
+                                                    <th>المستخدم 1</th>
+                                                    <th>المستخدم 2</th>
+                                                    <th>الإجراء</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                            `;
+
+      if (blocked.length === 0) {
+        html += `<tr><td colspan="6" class="text-center text-muted">لا توجد أرقام محظورة</td></tr>`;
+      } else {
+        blocked.forEach(row => {
+          const txid = row[0];
+          html += `
+                                <tr>
+                                    <td><code style="color:var(--danger);">${txid}</code></td>
+                                    <td>${row[1] || '-'}</td>
+                                    <td>${row[2] || '-'}</td>
+                                    <td><code>${truncate(row[3], 8)}</code></td>
+                                    <td><code>${truncate(row[4], 8)}</code></td>
+                                    <td>
+                                        <button class="btn-sm-custom btn-success" onclick="unblockTxid('${txid}')">
+                                            <i class="fas fa-unlock"></i> فك الحظر
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+        });
+      }
+
+      html += `
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // وظيفة فك حظر رقم
+    // ============================================================
+
+    async function unblockTxid(txid) {
+      if (!confirm(`⚠️ هل أنت متأكد من فك حظر ${txid}؟`)) return;
+
+      try {
+        await executeUpdate('unblock_txid', { txid });
+        showAlert('success', '✅ تم فك الحظر');
+        loadPage('blocked');
+      } catch (error) {
+        showAlert('danger', error.message);
+      }
+    }
+
+    // ============================================================
+    // 10. التقارير
+    // ============================================================
+
+    async function loadReport() {
+      const statsResult = executeQuery(`
+                                    SELECT 
+                                        (SELECT COUNT(*) FROM users) as total_users,
+                                        (SELECT COUNT(*) FROM users WHERE is_banned = 0) as active_users,
+                                        (SELECT COUNT(*) FROM users WHERE has_ichancy_account = 1) as ichancy_users,
+                                        (SELECT SUM(amount) FROM transactions WHERE type = 'payment' AND status = 'completed') as total_payments,
+                                        (SELECT SUM(amount) FROM withdrawal_requests WHERE status = 'completed') as total_withdrawals,
+                                        (SELECT COUNT(*) FROM withdrawal_requests WHERE status = 'pending') as pending_withdrawals,
+                                        (SELECT COUNT(*) FROM referrals) as total_referrals,
+                                        (SELECT SUM(commission_earned) FROM referrals) as total_commission,
+                                        (SELECT COUNT(*) FROM blocked_txids) as blocked_count
+                                `);
+
+      const stats = statsResult[0]?.values[0] || [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+      // جلب آخر المعاملات
+      const txsResult = executeQuery(`
+                                    SELECT user_id, type, amount, created_at 
+                                    FROM transactions 
+                                    ORDER BY created_at DESC 
+                                    LIMIT 10
+                                `);
+
+      const txs = txsResult[0]?.values || [];
+
+      // جلب الطلبات المعلقة
+      const pendingResult = executeQuery(`
+                                    SELECT user_id, amount, created_at 
+                                    FROM withdrawal_requests 
+                                    WHERE status = 'pending'
+                                    ORDER BY created_at DESC 
+                                    LIMIT 10
+                                `);
+
+      const pending = pendingResult[0]?.values || [];
+
+      const typeMap = {
+        'payment': '💰 شحن',
+        'ichancy_deposit': '📤 شحن IChancy',
+        'ichancy_withdraw': '📥 سحب IChancy',
+        'gift_sent': '🎁 هدية مرسلة',
+        'gift_received': '🎁 هدية مستقبلة',
+        'gift_code': '🎫 كود هدية',
+        'withdrawal': '💸 سحب',
+        'manual_payment': '📋 دفع يدوي'
+      };
+
+      let html = `
+                                <div class="row g-4">
+                                    <div class="col-md-12">
+                                        <div class="stat-card" style="cursor:default;">
+                                            <h6 style="color:var(--dark);"><i class="fas fa-file-alt" style="color:var(--primary);"></i> تقرير شامل</h6>
+                                            <p class="text-muted">${new Date().toLocaleString('ar-EG')}</p>
+                                            <hr style="border-color:var(--gray-light);">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p><strong>👥 إجمالي المستخدمين:</strong> <span style="color:var(--primary);">${stats[0] || 0}</span></p>
+                                                    <p><strong>✅ المستخدمين النشطين:</strong> <span style="color:var(--success);">${stats[1] || 0}</span></p>
+                                                    <p><strong>🎮 حسابات IChancy:</strong> <span style="color:var(--primary);">${stats[2] || 0}</span></p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p><strong>💰 إجمالي الشحنات:</strong> <span style="color:var(--success);">${formatCurrency(stats[3])} SYP</span></p>
+                                                    <p><strong>📤 إجمالي السحوبات:</strong> <span style="color:var(--danger);">${formatCurrency(stats[4])} SYP</span></p>
+                                                    <p><strong>👥 الإحالات:</strong> <span style="color:var(--primary);">${stats[6] || 0}</span></p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p><strong>⏳ طلبات سحب معلقة:</strong> <span style="color:var(--warning);">${stats[5] || 0}</span></p>
+                                                    <p><strong>💰 إجمالي العمولات:</strong> <span style="color:var(--warning);">${formatCurrency(stats[7])} SYP</span></p>
+                                                    <p><strong>🚫 الأرقام المحظورة:</strong> <span style="color:var(--danger);">${stats[8] || 0}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="table-container">
+                                            <div class="table-header">
+                                                <h6><i class="fas fa-exchange-alt" style="color:var(--primary);"></i> آخر المعاملات</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr><th>المستخدم</th><th>النوع</th><th>المبلغ</th><th>التاريخ</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                    `;
+
+      if (txs.length === 0) {
+        html += `<tr><td colspan="4" class="text-center text-muted">لا توجد معاملات</td></tr>`;
+      } else {
+        txs.forEach(row => {
+          const type = typeMap[row[1]] || row[1];
+          html += `
+                                        <tr>
+                                            <td><code>${truncate(row[0], 8)}</code></td>
+                                            <td>${type}</td>
+                                            <td class="${row[2] >= 0 ? 'text-success' : 'text-danger'}">${formatCurrency(row[2])}</td>
+                                            <td>${formatDate(row[3])}</td>
+                                        </tr>
+                                    `;
+        });
+      }
+
+      html += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="table-container">
+                                            <div class="table-header">
+                                                <h6><i class="fas fa-clock" style="color:var(--warning);"></i> طلبات سحب معلقة</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr><th>المستخدم</th><th>المبلغ</th><th>التاريخ</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                    `;
+
+      if (pending.length === 0) {
+        html += `<tr><td colspan="3" class="text-center text-muted">لا توجد طلبات معلقة</td></tr>`;
+      } else {
+        pending.forEach(row => {
+          html += `
+                                        <tr>
+                                            <td><code>${truncate(row[0], 8)}</code></td>
+                                            <td style="color:var(--warning);">${formatCurrency(row[1])}</td>
+                                            <td>${formatDate(row[2])}</td>
+                                        </tr>
+                                    `;
+        });
+      }
+
+      html += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+      document.getElementById('contentArea').innerHTML = html;
+    }
+
+    // ============================================================
+    // دوال مساعدة
+    // ============================================================
+
+    function searchTable(query, tableId) {
+      const table = document.getElementById(tableId);
+      if (!table) return;
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query.toLowerCase()) ? '' : 'none';
+      });
+    }
+
+    // ============================================================
+    // التهيئة
+    // ============================================================
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadPage('dashboard');
+    });
+
+    // جعل الدوال متاحة عالمياً
+    window.loadPage = loadPage;
+    window.refreshCurrentPage = refreshCurrentPage;
+    window.viewUser = viewUser;
+    window.toggleUserBan = toggleUserBan;
+    window.editUserBalance = editUserBalance;
+    window.approveWithdrawal = approveWithdrawal;
+    window.rejectWithdrawal = rejectWithdrawal;
+    window.approvePayment = approvePayment;
+    window.rejectPayment = rejectPayment;
+    window.showCreateGiftCode = showCreateGiftCode;
+    window.toggleGiftCode = toggleGiftCode;
+    window.deleteGiftCode = deleteGiftCode;
+    window.editSetting = editSetting;
+    window.togglePaymentMethod = togglePaymentMethod;
+    window.toggleWithdrawMethod = toggleWithdrawMethod;
+    window.unblockTxid = unblockTxid;
+    window.searchTable = searchTable;
+    window.showDetailPanel = showDetailPanel;
+    window.closeDetailPanel = closeDetailPanel;
+    window.showUserDetails = showUserDetails;
+    window.showPaymentDetails = showPaymentDetails;
+    window.showWithdrawalDetails = showWithdrawalDetails;
+    window.showReferralDetails = showReferralDetails;
+    window.showBlockedDetails = showBlockedDetails;
+    window.showPendingDetails = showPendingDetails;
+  </script>
+
 </body>
 </html>
