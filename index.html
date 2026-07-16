@@ -17,17 +17,17 @@
 
     <style>
         /* ============================================================
-           المتغيرات العامة - الأحمر والأزرق
+           المتغيرات العامة
            ============================================================ */
         :root {
             --primary: #0d6efd;
             --primary-dark: #0a58ca;
             --primary-light: #6ea8fe;
-            --primary-glow: rgba(13, 110, 253, 0.4);
+            --primary-glow: rgba(13, 110, 253, 0.35);
             --danger: #dc3545;
             --danger-dark: #b02a37;
             --danger-light: #ea868f;
-            --danger-glow: rgba(220, 53, 69, 0.4);
+            --danger-glow: rgba(220, 53, 69, 0.35);
             --gradient-red: linear-gradient(135deg, #dc3545, #b02a37);
             --gradient-blue: linear-gradient(135deg, #0d6efd, #0a58ca);
             --gradient-main: linear-gradient(135deg, #0d6efd, #dc3545);
@@ -46,9 +46,6 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ============================================================
-           الأساسيات
-           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -78,11 +75,10 @@
             display: flex;
             flex-direction: column;
             z-index: 100;
-            background: linear-gradient(180deg, #0a0a1a 0%, #111128 100%);
         }
 
         .sidebar-header {
-            padding: 25px 20px 20px;
+            padding: 20px 16px 16px;
             text-align: center;
             border-bottom: 2px solid var(--border-color);
             position: relative;
@@ -92,117 +88,85 @@
             content: '';
             position: absolute;
             bottom: -2px;
-            left: 20%;
-            right: 20%;
+            left: 15%;
+            right: 15%;
             height: 2px;
             background: var(--gradient-main);
             border-radius: 2px;
         }
 
         .sidebar-header .logo {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
             background: var(--gradient-main);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 40px rgba(13, 110, 253, 0.3);
             letter-spacing: -0.5px;
         }
 
         .sidebar-header .logo i {
             -webkit-text-fill-color: initial;
             color: var(--primary);
-            margin-left: 8px;
+            margin-left: 6px;
         }
 
         .sidebar-header .subtitle {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 2px;
             letter-spacing: 1px;
         }
 
         .sidebar .nav {
-            padding: 15px 10px;
+            padding: 12px 8px;
             flex: 1;
         }
 
         .sidebar .nav-link {
             color: var(--text-muted);
-            padding: 12px 18px;
+            padding: 10px 14px;
             border-radius: var(--radius-sm);
-            margin: 3px 0;
+            margin: 2px 0;
             transition: var(--transition);
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 13px;
             border: 1px solid transparent;
             position: relative;
-            overflow: hidden;
-        }
-
-        .sidebar .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-main);
-            opacity: 0;
-            transition: var(--transition);
-            border-radius: var(--radius-sm);
-        }
-
-        .sidebar .nav-link:hover::before {
-            opacity: 0.08;
         }
 
         .sidebar .nav-link:hover {
+            background: rgba(13, 110, 253, 0.1);
             color: var(--text-light);
             border-color: rgba(13, 110, 253, 0.2);
-            transform: translateX(-4px);
         }
 
         .sidebar .nav-link.active {
             background: var(--gradient-main);
             color: white;
-            box-shadow: 0 4px 25px rgba(13, 110, 253, 0.3);
+            box-shadow: 0 4px 20px rgba(13, 110, 253, 0.3);
             border-color: transparent;
         }
 
-        .sidebar .nav-link.active::before {
-            opacity: 0;
-        }
-
         .sidebar .nav-link i {
-            width: 22px;
+            width: 20px;
             text-align: center;
-            font-size: 16px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .sidebar .nav-link .nav-text {
-            position: relative;
-            z-index: 1;
+            font-size: 14px;
         }
 
         .sidebar .nav-link .badge-count {
             margin-right: auto;
             background: var(--gradient-red);
             color: white;
-            font-size: 11px;
-            padding: 2px 10px;
+            font-size: 10px;
+            padding: 1px 8px;
             border-radius: 20px;
-            min-width: 24px;
+            min-width: 20px;
             text-align: center;
-            position: relative;
-            z-index: 1;
             box-shadow: 0 2px 10px rgba(220, 53, 69, 0.3);
             animation: pulse-badge 2s infinite;
         }
@@ -218,10 +182,10 @@
         }
 
         .sidebar-footer {
-            padding: 15px 20px;
+            padding: 12px 16px;
             border-top: 2px solid var(--border-color);
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             position: relative;
         }
@@ -241,7 +205,7 @@
            المحتوى الرئيسي
            ============================================================ */
         .main-content {
-            padding: 25px 35px;
+            padding: 20px 28px;
             min-height: 100vh;
             background: radial-gradient(ellipse at 0% 0%, #111128 0%, #0a0a1a 100%);
         }
@@ -253,28 +217,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .page-title {
-            font-size: 26px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
             gap: 12px;
         }
 
+        .page-title {
+            font-size: 22px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .page-title .title-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             background: var(--gradient-main);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             color: white;
             box-shadow: 0 4px 20px rgba(13, 110, 253, 0.3);
         }
@@ -287,7 +251,7 @@
         }
 
         .page-title small {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 400;
             color: var(--text-muted);
             -webkit-text-fill-color: var(--text-muted);
@@ -295,7 +259,7 @@
 
         .header-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -304,13 +268,13 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--text-light);
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: var(--radius-sm);
             transition: var(--transition);
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
         }
 
@@ -324,13 +288,13 @@
             background: rgba(220, 53, 69, 0.15);
             border: 1px solid var(--danger);
             color: var(--danger);
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: var(--radius-sm);
             transition: var(--transition);
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
         }
 
@@ -344,31 +308,31 @@
             background: var(--danger);
             color: white;
             border-radius: 50%;
-            padding: 1px 8px;
-            font-size: 11px;
+            padding: 0 7px;
+            font-size: 10px;
             margin-right: 4px;
             animation: pulse-badge 2s infinite;
         }
 
         /* ============================================================
-           البطاقات الإحصائية
+           البطاقات الإحصائية - قابلة للنقر
            ============================================================ */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 18px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 15px;
+            margin-bottom: 24px;
         }
 
         .stat-card {
             background: var(--bg-card);
             border-radius: var(--radius);
-            padding: 20px 24px;
+            padding: 18px 20px;
             border: 1px solid var(--border-color);
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            cursor: default;
+            cursor: pointer;
         }
 
         .stat-card::before {
@@ -419,15 +383,15 @@
         }
 
         .stat-card .stat-label {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
             font-weight: 500;
         }
 
         .stat-card .stat-number {
-            font-size: 30px;
+            font-size: 26px;
             font-weight: 900;
-            margin: 4px 0;
+            margin: 2px 0;
             letter-spacing: -0.5px;
         }
 
@@ -445,13 +409,13 @@
         }
 
         .stat-card .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 18px;
             flex-shrink: 0;
         }
 
@@ -468,22 +432,20 @@
             color: white;
         }
 
-        .stat-card .stat-change {
-            font-size: 12px;
-            margin-top: 6px;
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 20px;
+        .stat-card .stat-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .stat-card .stat-sub .highlight {
+            color: var(--primary-light);
             font-weight: 600;
         }
 
-        .stat-card .stat-change.up {
-            background: rgba(13, 110, 253, 0.15);
-            color: var(--primary);
-        }
-        .stat-card .stat-change.down {
-            background: rgba(220, 53, 69, 0.15);
-            color: var(--danger);
+        .stat-card .stat-sub .highlight-red {
+            color: var(--danger-light);
+            font-weight: 600;
         }
 
         /* ============================================================
@@ -504,40 +466,40 @@
         }
 
         .table-header {
-            padding: 18px 24px;
+            padding: 14px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             background: rgba(255, 255, 255, 0.02);
         }
 
         .table-header h6 {
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             margin: 0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .table-header h6 .header-icon {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 8px;
             background: var(--gradient-main);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .table-tools {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -546,10 +508,10 @@
             background: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 8px 16px;
+            padding: 6px 14px;
             color: var(--text-light);
-            width: 220px;
-            font-size: 13px;
+            width: 200px;
+            font-size: 12px;
             transition: var(--transition);
         }
 
@@ -563,13 +525,22 @@
             color: var(--text-muted);
         }
 
+        .table-tools .count-badge {
+            background: rgba(13, 110, 253, 0.15);
+            color: var(--primary-light);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
         .table-responsive {
             padding: 0;
         }
 
         .table {
             margin: 0;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .table thead th {
@@ -577,21 +548,14 @@
             border-bottom: 2px solid var(--border-color);
             color: var(--primary-light);
             font-weight: 700;
-            padding: 14px 16px;
-            font-size: 12px;
+            padding: 10px 14px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .table thead th:first-child {
-            border-radius: 0 8px 0 0;
-        }
-        .table thead th:last-child {
-            border-radius: 8px 0 0 0;
-        }
-
         .table tbody td {
-            padding: 12px 16px;
+            padding: 10px 14px;
             vertical-align: middle;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-light);
@@ -610,20 +574,20 @@
            ============================================================ */
         .btn-group-custom {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             flex-wrap: wrap;
         }
 
         .btn-sm-custom {
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
             border: none;
             transition: var(--transition);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             font-weight: 600;
         }
 
@@ -725,9 +689,9 @@
            الحالات
            ============================================================ */
         .badge-status {
-            padding: 4px 14px;
+            padding: 3px 12px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             display: inline-block;
         }
@@ -770,7 +734,7 @@
 
         .modal-header {
             border-bottom: 2px solid var(--border-color);
-            padding: 18px 24px;
+            padding: 14px 20px;
             background: rgba(13, 110, 253, 0.05);
         }
 
@@ -792,17 +756,17 @@
         }
 
         .modal-body {
-            padding: 24px;
+            padding: 20px;
         }
 
         .modal-footer {
             border-top: 2px solid var(--border-color);
-            padding: 16px 24px;
+            padding: 14px 20px;
         }
 
         .form-label {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-light);
         }
 
@@ -811,8 +775,8 @@
             border: 1px solid var(--border-color);
             color: var(--text-light);
             border-radius: var(--radius-sm);
-            padding: 10px 16px;
-            font-size: 14px;
+            padding: 8px 14px;
+            font-size: 13px;
             transition: var(--transition);
         }
 
@@ -833,10 +797,11 @@
         .alert {
             border-radius: var(--radius-sm);
             border: none;
-            padding: 14px 20px;
-            margin-bottom: 20px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
             font-weight: 500;
             border-right: 4px solid transparent;
+            font-size: 13px;
         }
 
         .alert-success {
@@ -874,15 +839,15 @@
         .btn-create {
             background: var(--gradient-main);
             border: none;
-            padding: 10px 24px;
+            padding: 8px 18px;
             border-radius: var(--radius-sm);
             color: white;
             font-weight: 600;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
+            gap: 6px;
+            font-size: 13px;
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(13, 110, 253, 0.3);
         }
@@ -901,13 +866,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 300px;
-            gap: 20px;
+            min-height: 250px;
+            gap: 16px;
         }
 
         .loading-container .spinner {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border: 3px solid var(--border-color);
             border-top-color: var(--primary);
             border-radius: 50%;
@@ -916,7 +881,7 @@
 
         .loading-container p {
             color: var(--text-muted);
-            font-size: 16px;
+            font-size: 14px;
         }
 
         @keyframes spin {
@@ -930,23 +895,23 @@
            ============================================================ */
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 16px;
             color: var(--text-muted);
         }
 
         .empty-state i {
-            font-size: 48px;
-            margin-bottom: 15px;
+            font-size: 40px;
+            margin-bottom: 12px;
             opacity: 0.3;
         }
 
         .empty-state h5 {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .empty-state p {
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* ============================================================
@@ -955,19 +920,19 @@
         .user-report {
             background: var(--bg-card);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 20px;
             border: 1px solid var(--border-color);
         }
 
         .user-report .divider {
             border-color: var(--border-color);
-            margin: 18px 0;
+            margin: 14px 0;
         }
 
         .user-report .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
+            padding: 4px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
@@ -978,10 +943,12 @@
         .user-report .info-label {
             color: var(--text-muted);
             font-weight: 500;
+            font-size: 13px;
         }
 
         .user-report .info-value {
             font-weight: 600;
+            font-size: 13px;
         }
 
         .user-report .info-value.blue {
@@ -995,24 +962,24 @@
            Console Logs
            ============================================================ */
         .console-logs {
-            max-height: 400px;
+            max-height: 350px;
             overflow-y: auto;
             background: #0a0a1a;
             border-radius: 8px;
-            padding: 10px;
+            padding: 8px;
             font-family: 'Courier New', monospace;
-            font-size: 12px;
+            font-size: 11px;
             border: 1px solid var(--border-color);
         }
 
         .console-logs .log-entry {
-            padding: 6px 8px;
+            padding: 4px 6px;
             border-bottom: 1px solid #1a1a1a;
         }
 
         .console-logs .log-entry .time {
             color: #636e72;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .console-logs .log-entry .level-INFO {
@@ -1036,26 +1003,26 @@
         }
         .console-logs .log-entry .data {
             color: var(--text-muted);
-            font-size: 11px;
-            margin-top: 4px;
-            padding: 4px 8px;
+            font-size: 10px;
+            margin-top: 2px;
+            padding: 2px 6px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 4px;
         }
 
         .console-stats {
             background: var(--bg-card);
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
             border: 1px solid var(--border-color);
         }
 
         .console-stats .stat {
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .console-stats .stat .count {
@@ -1076,6 +1043,52 @@
         }
 
         /* ============================================================
+           تبويبات الإدارة
+           ============================================================ */
+        .admin-tabs {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-tabs .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .admin-tabs .tab-btn:hover {
+            background: rgba(13, 110, 253, 0.1);
+            color: var(--text-light);
+        }
+
+        .admin-tabs .tab-btn.active {
+            background: var(--gradient-main);
+            color: white;
+            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ============================================================
            التجاوب مع الشاشات
            ============================================================ */
         @media (max-width: 992px) {
@@ -1090,16 +1103,16 @@
             .sidebar .nav {
                 display: flex;
                 flex-wrap: wrap;
-                padding: 10px;
-                gap: 4px;
+                padding: 8px;
+                gap: 3px;
             }
 
             .sidebar .nav-link {
-                padding: 8px 14px;
-                font-size: 13px;
+                padding: 6px 10px;
+                font-size: 12px;
                 margin: 0;
                 flex: 1 1 auto;
-                min-width: 80px;
+                min-width: 60px;
                 justify-content: center;
             }
 
@@ -1113,67 +1126,72 @@
             }
 
             .sidebar-header .logo {
-                font-size: 22px;
-            }
-
-            .main-content {
-                padding: 15px 18px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 12px;
-            }
-
-            .stat-card .stat-number {
-                font-size: 22px;
-            }
-
-            .page-title {
                 font-size: 20px;
             }
 
+            .main-content {
+                padding: 12px 14px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
+            }
+
+            .stat-card .stat-number {
+                font-size: 20px;
+            }
+
+            .page-title {
+                font-size: 18px;
+            }
+
             .table-tools .search-box {
-                width: 150px;
+                width: 130px;
             }
 
             .table-header {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 10px;
+                gap: 8px;
             }
 
             .table-tools {
                 flex-wrap: wrap;
+            }
+
+            .admin-tabs .tab-btn {
+                padding: 6px 12px;
+                font-size: 12px;
             }
         }
 
         @media (max-width: 576px) {
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                gap: 8px;
             }
 
             .stat-card {
-                padding: 14px 16px;
+                padding: 12px 14px;
             }
 
             .stat-card .stat-number {
-                font-size: 18px;
+                font-size: 17px;
             }
 
             .stat-card .stat-label {
-                font-size: 11px;
+                font-size: 10px;
             }
 
             .stat-card .stat-icon {
-                width: 38px;
-                height: 38px;
-                font-size: 16px;
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
             }
 
             .page-title {
-                font-size: 17px;
+                font-size: 16px;
             }
 
             .page-title small {
@@ -1181,22 +1199,22 @@
             }
 
             .main-content {
-                padding: 10px 12px;
+                padding: 8px 10px;
             }
 
             .table tbody td {
-                padding: 8px 10px;
-                font-size: 12px;
+                padding: 6px 8px;
+                font-size: 11px;
             }
 
             .table thead th {
-                padding: 10px 10px;
-                font-size: 10px;
+                padding: 6px 8px;
+                font-size: 9px;
             }
 
             .btn-sm-custom {
-                padding: 4px 8px;
-                font-size: 10px;
+                padding: 3px 6px;
+                font-size: 9px;
             }
 
             .table-tools .search-box {
@@ -1204,22 +1222,33 @@
             }
 
             .btn-create {
-                padding: 8px 16px;
-                font-size: 12px;
+                padding: 6px 12px;
+                font-size: 11px;
                 width: 100%;
                 justify-content: center;
             }
 
             .header-actions .btn-refresh,
             .header-actions .btn-console {
-                padding: 6px 12px;
-                font-size: 12px;
+                padding: 4px 10px;
+                font-size: 11px;
             }
 
             .page-title .title-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 16px;
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            .admin-tabs .tab-btn {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+
+            .sidebar .nav-link {
+                padding: 4px 8px;
+                font-size: 11px;
+                min-width: 50px;
             }
         }
 
@@ -1227,8 +1256,8 @@
            Scrollbar مخصص
            ============================================================ */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
         }
 
         ::-webkit-scrollbar-track {
@@ -1247,16 +1276,12 @@
         /* ============================================================
            تأثيرات إضافية
            ============================================================ */
-        .glow-text {
-            text-shadow: 0 0 30px rgba(13, 110, 253, 0.3);
+        .text-primary-custom {
+            color: var(--primary-light);
         }
 
-        .glow-text-red {
-            text-shadow: 0 0 30px rgba(220, 53, 69, 0.3);
-        }
-
-        .border-gradient {
-            border-image: var(--gradient-main) 1;
+        .text-danger-custom {
+            color: var(--danger-light);
         }
 
         .bg-gradient-main {
@@ -1279,6 +1304,14 @@
             50% {
                 opacity: 0.7;
             }
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .clickable:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -1413,10 +1446,7 @@
         // التكوين الأساسي
         // ============================================================
 
-        // ⚠️ قم بتغيير هذا الرابط إلى رابط التطبيق الخاص بك
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx2aWC82_jf8Wnzk4skOJmBxDSrwiupW9M2fCWqbXRkJTJ1KOdeQcrkYKVrT6c8H-fi/exec';
-
-        // ⚠️ قم بتغيير هذا المعرف إلى معرف المشرف الخاص بك
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9yc507c9BKH54Ebap46Mk6dlkbUarBtqME7ShWaAmKowzF9w8dpD2GBmGDvNlz0rk/exec';
         const ADMIN_ID = '7011476249';
 
         let currentPage = 'dashboard';
@@ -1439,16 +1469,13 @@
 
             try {
                 const response = await fetch(url.toString());
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
+                if (data.error) throw new Error(data.error);
                 return data;
             } catch (error) {
                 console.error('API Error:', error);
-                showAlert('danger', '⚠️ حدث خطأ في الاتصال: ' + error.message);
+                showAlert('danger', '⚠️ ' + error.message);
                 throw error;
             }
         }
@@ -1465,19 +1492,12 @@
                 ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="إغلاق"></button>
             `;
-
-            const container = document.querySelector('.main-content');
-            container.insertBefore(alertDiv, container.firstChild);
-
-            setTimeout(() => {
-                if (alertDiv.parentNode) {
-                    alertDiv.remove();
-                }
-            }, 6000);
+            document.querySelector('.main-content').insertBefore(alertDiv, document.querySelector('.main-content').firstChild);
+            setTimeout(() => { if (alertDiv.parentNode) alertDiv.remove(); }, 5000);
         }
 
-        function showLoading(containerId = 'contentArea') {
-            document.getElementById(containerId).innerHTML = `
+        function showLoading() {
+            document.getElementById('contentArea').innerHTML = `
                 <div class="loading-container">
                     <div class="spinner"></div>
                     <p>جاري تحميل البيانات...</p>
@@ -1501,9 +1521,7 @@
                     hour: '2-digit',
                     minute: '2-digit'
                 });
-            } catch {
-                return dateStr;
-            }
+            } catch { return dateStr; }
         }
 
         function getStatusBadge(status) {
@@ -1530,14 +1548,10 @@
         async function loadPage(page) {
             currentPage = page;
 
-            // تحديث الشريط الجانبي
-            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
             const activeLink = document.querySelector(`.sidebar .nav-link[data-page="${page}"]`);
             if (activeLink) activeLink.classList.add('active');
 
-            // تحديث العنوان
             const titles = {
                 'dashboard': { icon: 'fa-chart-pie', label: 'لوحة التحكم', sub: 'نظرة عامة' },
                 'users': { icon: 'fa-users', label: 'المستخدمين', sub: 'إدارة المستخدمين' },
@@ -1558,14 +1572,9 @@
                 <small>${info.sub}</small>
             `;
 
-            // بدء/إيقاف التحديث التلقائي
-            if (page === 'dashboard') {
-                startAutoRefresh();
-            } else {
-                stopAutoRefresh();
-            }
+            if (page === 'dashboard') startAutoRefresh();
+            else stopAutoRefresh();
 
-            // تحميل المحتوى
             showLoading();
 
             try {
@@ -1605,7 +1614,7 @@
                 document.getElementById('contentArea').innerHTML = `
                     <div class="alert alert-danger">
                         <i class="fas fa-exclamation-triangle"></i>
-                        حدث خطأ في تحميل الصفحة: ${error.message}
+                        حدث خطأ: ${error.message}
                         <br>
                         <button class="btn btn-sm btn-outline-light mt-2" onclick="refreshCurrentPage()">
                             <i class="fas fa-redo"></i> إعادة المحاولة
@@ -1615,20 +1624,12 @@
             }
         }
 
-        function refreshCurrentPage() {
-            loadPage(currentPage);
-        }
-
-        // ============================================================
-        // التحديث التلقائي
-        // ============================================================
+        function refreshCurrentPage() { loadPage(currentPage); }
 
         function startAutoRefresh() {
             stopAutoRefresh();
             autoRefreshInterval = setInterval(() => {
-                if (currentPage === 'dashboard') {
-                    loadDashboard();
-                }
+                if (currentPage === 'dashboard') loadDashboard();
             }, 30000);
         }
 
@@ -1639,8 +1640,17 @@
             }
         }
 
+        function searchTable(query, tableId) {
+            const table = document.getElementById(tableId);
+            if (!table) return;
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+            });
+        }
+
         // ============================================================
-        // 1. لوحة التحكم
+        // 1. لوحة التحكم - مع بطاقات قابلة للنقر
         // ============================================================
 
         async function loadDashboard() {
@@ -1652,118 +1662,100 @@
 
             const html = `
                 <div class="stats-grid">
-                    <div class="stat-card blue">
+                    <div class="stat-card blue" onclick="loadPage('users')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">إجمالي المستخدمين</div>
+                                <div class="stat-label">👥 إجمالي المستخدمين</div>
                                 <div class="stat-number blue">${stats.total_users || 0}</div>
+                                <div class="stat-sub">🆕 جديد: <span class="highlight">${stats.new_users || 0}</span></div>
                             </div>
                             <div class="stat-icon blue"><i class="fas fa-users"></i></div>
                         </div>
                     </div>
 
-                    <div class="stat-card gradient">
+                    <div class="stat-card gradient" onclick="loadPage('users')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">المستخدمين النشطين</div>
+                                <div class="stat-label">✅ المستخدمين النشطين</div>
                                 <div class="stat-number gradient-text">${stats.active_users || 0}</div>
+                                <div class="stat-sub">من إجمالي ${stats.total_users || 0}</div>
                             </div>
                             <div class="stat-icon gradient"><i class="fas fa-user-check"></i></div>
                         </div>
                     </div>
 
-                    <div class="stat-card blue">
+                    <div class="stat-card blue" onclick="loadPage('users')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">حسابات IChancy</div>
+                                <div class="stat-label">🎮 حسابات IChancy</div>
                                 <div class="stat-number blue">${stats.ichancy_users || 0}</div>
+                                <div class="stat-sub">نسبة: <span class="highlight">${stats.total_users ? Math.round((stats.ichancy_users / stats.total_users) * 100) : 0}%</span></div>
                             </div>
                             <div class="stat-icon blue"><i class="fas fa-gamepad"></i></div>
                         </div>
                     </div>
 
-                    <div class="stat-card red">
+                    <div class="stat-card red" onclick="loadPage('withdrawals')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">طلبات سحب معلقة</div>
+                                <div class="stat-label">⏳ طلبات سحب معلقة</div>
                                 <div class="stat-number red">${stats.pending_withdrawals || 0}</div>
+                                <div class="stat-sub">بحاجة للمراجعة</div>
                             </div>
                             <div class="stat-icon red"><i class="fas fa-clock"></i></div>
                         </div>
                     </div>
-                </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card blue">
+                    <div class="stat-card blue" onclick="loadPage('transactions')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">إجمالي الشحنات</div>
+                                <div class="stat-label">💰 إجمالي الشحنات</div>
                                 <div class="stat-number blue">${formatCurrency(stats.total_payments)}</div>
-                                <div style="font-size:12px;color:var(--text-muted);">SYP</div>
+                                <div class="stat-sub">SYP</div>
                             </div>
                             <div class="stat-icon blue"><i class="fas fa-arrow-down"></i></div>
                         </div>
                     </div>
 
-                    <div class="stat-card red">
+                    <div class="stat-card red" onclick="loadPage('transactions')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">إجمالي السحوبات</div>
+                                <div class="stat-label">📤 إجمالي السحوبات</div>
                                 <div class="stat-number red">${formatCurrency(stats.total_withdrawals)}</div>
-                                <div style="font-size:12px;color:var(--text-muted);">SYP</div>
+                                <div class="stat-sub">SYP</div>
                             </div>
                             <div class="stat-icon red"><i class="fas fa-arrow-up"></i></div>
                         </div>
                     </div>
 
-                    <div class="stat-card gradient">
+                    <div class="stat-card gradient" onclick="loadPage('referrals')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">إجمالي العمولات</div>
-                                <div class="stat-number gradient-text">${formatCurrency(stats.total_commission)}</div>
-                                <div style="font-size:12px;color:var(--text-muted);">SYP</div>
+                                <div class="stat-label">👥 إجمالي الإحالات</div>
+                                <div class="stat-number gradient-text">${stats.total_referrals || 0}</div>
+                                <div class="stat-sub">💰 عمولات: <span class="highlight">${formatCurrency(stats.total_commission)} SYP</span></div>
                             </div>
-                            <div class="stat-icon gradient"><i class="fas fa-hand-holding-usd"></i></div>
+                            <div class="stat-icon gradient"><i class="fas fa-link"></i></div>
                         </div>
                     </div>
 
-                    <div class="stat-card blue">
+                    <div class="stat-card red" onclick="loadPage('payments')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">إجمالي الإحالات</div>
-                                <div class="stat-number blue">${stats.total_referrals || 0}</div>
-                            </div>
-                            <div class="stat-icon blue"><i class="fas fa-link"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card gradient">
-                        <div class="stat-content">
-                            <div class="stat-info">
-                                <div class="stat-label">إجمالي المعاملات</div>
-                                <div class="stat-number gradient-text">${(stats.total_payments || 0) + (stats.total_withdrawals || 0)}</div>
-                            </div>
-                            <div class="stat-icon gradient"><i class="fas fa-chart-line"></i></div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card red">
-                        <div class="stat-content">
-                            <div class="stat-info">
-                                <div class="stat-label">طلبات دفع معلقة</div>
+                                <div class="stat-label">📋 طلبات دفع معلقة</div>
                                 <div class="stat-number red">${stats.pending_payments || 0}</div>
+                                <div class="stat-sub">بحاجة للمراجعة</div>
                             </div>
                             <div class="stat-icon red"><i class="fas fa-credit-card"></i></div>
                         </div>
                     </div>
 
-                    <div class="stat-card red">
+                    <div class="stat-card red" onclick="loadPage('blocked')">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">الأرقام المحظورة</div>
+                                <div class="stat-label">🚫 الأرقام المحظورة</div>
                                 <div class="stat-number red">${stats.blocked_count || 0}</div>
+                                <div class="stat-sub">تم حظرها تلقائياً</div>
                             </div>
                             <div class="stat-icon red"><i class="fas fa-ban"></i></div>
                         </div>
@@ -1772,10 +1764,71 @@
                     <div class="stat-card blue">
                         <div class="stat-content">
                             <div class="stat-info">
-                                <div class="stat-label">آخر تحديث</div>
+                                <div class="stat-label">📊 إجمالي المعاملات</div>
+                                <div class="stat-number blue">${(stats.total_payments || 0) + (stats.total_withdrawals || 0)}</div>
+                                <div class="stat-sub">جميع العمليات</div>
+                            </div>
+                            <div class="stat-icon blue"><i class="fas fa-chart-line"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card blue">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-label">⏰ آخر تحديث</div>
                                 <div class="stat-number" style="font-size:16px;color:var(--primary-light);">${formatDate(data.timestamp)}</div>
+                                <div class="stat-sub">تحديث تلقائي كل 30 ثانية</div>
                             </div>
                             <div class="stat-icon blue"><i class="fas fa-clock"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="table-container">
+                            <div class="table-header">
+                                <h6><span class="header-icon"><i class="fas fa-users"></i></span> أحدث المستخدمين</h6>
+                            </div>
+                            <div class="table-responsive" style="max-height:250px;overflow-y:auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th>المعرف</th><th>الرصيد</th><th>التسجيل</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        ${stats.recent_users && stats.recent_users.length > 0 ? stats.recent_users.slice(0, 8).map(u => `
+                                            <tr>
+                                                <td><code>${truncate(u.user_id, 8)}</code></td>
+                                                <td>${formatCurrency(u.wallet_balance)}</td>
+                                                <td>${formatDate(u.created_at)}</td>
+                                            </tr>
+                                        `).join('') : '<tr><td colspan="3" class="text-center text-muted">لا يوجد مستخدمين</td></tr>'}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="table-container">
+                            <div class="table-header">
+                                <h6><span class="header-icon"><i class="fas fa-exchange-alt"></i></span> آخر المعاملات</h6>
+                            </div>
+                            <div class="table-responsive" style="max-height:250px;overflow-y:auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr><th>المستخدم</th><th>النوع</th><th>المبلغ</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        ${stats.recent_transactions && stats.recent_transactions.length > 0 ? stats.recent_transactions.slice(0, 8).map(tx => `
+                                            <tr>
+                                                <td><code>${truncate(tx.user_id, 8)}</code></td>
+                                                <td>${tx.type}</td>
+                                                <td class="${tx.amount >= 0 ? 'text-primary' : 'text-danger'}">${formatCurrency(tx.amount)}</td>
+                                            </tr>
+                                        `).join('') : '<tr><td colspan="3" class="text-center text-muted">لا توجد معاملات</td></tr>'}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1795,13 +1848,10 @@
             let html = `
                 <div class="table-container">
                     <div class="table-header">
-                        <h6>
-                            <span class="header-icon"><i class="fas fa-users"></i></span>
-                            قائمة المستخدمين
-                        </h6>
+                        <h6><span class="header-icon"><i class="fas fa-users"></i></span> قائمة المستخدمين</h6>
                         <div class="table-tools">
                             <input class="search-box" placeholder="🔍 بحث عن مستخدم..." onkeyup="searchTable(this.value, 'usersTable')">
-                            <span style="color:var(--text-muted);font-size:13px;">${users.length} مستخدم</span>
+                            <span class="count-badge">${users.length} مستخدم</span>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -1822,22 +1872,11 @@
             `;
 
             if (users.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="8">
-                            <div class="empty-state">
-                                <i class="fas fa-users"></i>
-                                <h5>لا يوجد مستخدمين</h5>
-                                <p>لم يتم تسجيل أي مستخدمين في النظام حتى الآن</p>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-users"></i><h5>لا يوجد مستخدمين</h5><p>لم يتم تسجيل أي مستخدمين</p></div></td></tr>`;
             } else {
                 users.forEach((user, index) => {
                     const isBanned = user.is_banned == 1;
                     const hasIchancy = user.has_ichancy_account == 1;
-
                     html += `
                         <tr>
                             <td>${index + 1}</td>
@@ -1849,17 +1888,9 @@
                             <td>${formatDate(user.created_at)}</td>
                             <td>
                                 <div class="btn-group-custom">
-                                    <button class="btn-sm-custom btn-view" onclick="viewUser('${user.user_id}')" title="عرض التقرير">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-sm-custom ${isBanned ? 'btn-unban' : 'btn-ban'}" 
-                                            onclick="toggleUserBan('${user.user_id}')" 
-                                            title="${isBanned ? 'فك الحظر' : 'حظر'}">
-                                        <i class="fas fa-${isBanned ? 'unlock' : 'ban'}"></i>
-                                    </button>
-                                    <button class="btn-sm-custom btn-edit" onclick="editUserBalance('${user.user_id}')" title="تعديل الرصيد">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
+                                    <button class="btn-sm-custom btn-view" onclick="viewUser('${user.user_id}')" title="عرض التقرير"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-sm-custom ${isBanned ? 'btn-unban' : 'btn-ban'}" onclick="toggleUserBan('${user.user_id}')" title="${isBanned ? 'فك الحظر' : 'حظر'}"><i class="fas fa-${isBanned ? 'unlock' : 'ban'}"></i></button>
+                                    <button class="btn-sm-custom btn-edit" onclick="editUserBalance('${user.user_id}')" title="تعديل الرصيد"><i class="fas fa-edit"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -1867,24 +1898,8 @@
                 });
             }
 
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
-        }
-
-        function searchTable(query, tableId) {
-            const table = document.getElementById(tableId);
-            if (!table) return;
-            const rows = table.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(query.toLowerCase()) ? '' : 'none';
-            });
         }
 
         // ============================================================
@@ -1895,11 +1910,7 @@
             try {
                 const data = await apiCall('user', { userId });
                 const user = data.user;
-
-                if (!user) {
-                    showAlert('danger', 'المستخدم غير موجود');
-                    return;
-                }
+                if (!user) { showAlert('danger', 'المستخدم غير موجود'); return; }
 
                 const html = `
                     <div class="user-report">
@@ -1914,76 +1925,29 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="info-row">
-                                    <span class="info-label">🆔 المعرف</span>
-                                    <span class="info-value"><code>${user.user_id}</code></span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">👤 اسم المستخدم</span>
-                                    <span class="info-value">${user.username || '-'}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">📝 الاسم الكامل</span>
-                                    <span class="info-value">${user.full_name || '-'}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">📅 تاريخ التسجيل</span>
-                                    <span class="info-value">${formatDate(user.created_at)}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">🎮 حساب IChancy</span>
-                                    <span class="info-value">${user.has_ichancy_account == 1 ? '✅ مفعل' : '❌ غير مفعل'}</span>
-                                </div>
-                                ${user.ichancy_username ? `
-                                <div class="info-row">
-                                    <span class="info-label">👤 اسم IChancy</span>
-                                    <span class="info-value"><code>${user.ichancy_username}</code></span>
-                                </div>` : ''}
+                                <div class="info-row"><span class="info-label">🆔 المعرف</span><span class="info-value"><code>${user.user_id}</code></span></div>
+                                <div class="info-row"><span class="info-label">👤 اسم المستخدم</span><span class="info-value">${user.username || '-'}</span></div>
+                                <div class="info-row"><span class="info-label">📝 الاسم الكامل</span><span class="info-value">${user.full_name || '-'}</span></div>
+                                <div class="info-row"><span class="info-label">📅 تاريخ التسجيل</span><span class="info-value">${formatDate(user.created_at)}</span></div>
+                                <div class="info-row"><span class="info-label">🎮 حساب IChancy</span><span class="info-value">${user.has_ichancy_account == 1 ? '✅ مفعل' : '❌ غير مفعل'}</span></div>
+                                ${user.ichancy_username ? `<div class="info-row"><span class="info-label">👤 اسم IChancy</span><span class="info-value"><code>${user.ichancy_username}</code></span></div>` : ''}
                             </div>
                             <div class="col-md-6">
-                                <div class="info-row">
-                                    <span class="info-label">💰 الرصيد</span>
-                                    <span class="info-value blue">${formatCurrency(user.wallet_balance)} SYP</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">📥 إجمالي الشحنات</span>
-                                    <span class="info-value blue">${formatCurrency(user.total_payments)} SYP</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">📤 إجمالي السحوبات</span>
-                                    <span class="info-value red">${formatCurrency(user.total_withdrawals)} SYP</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">👥 عدد الإحالات</span>
-                                    <span class="info-value">${user.referrals_count || 0}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">💰 العمولات المكتسبة</span>
-                                    <span class="info-value blue">${formatCurrency(user.total_commission)} SYP</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">📊 عدد المعاملات</span>
-                                    <span class="info-value">${user.count_payments || 0} شحن / ${user.count_withdrawals || 0} سحب</span>
-                                </div>
+                                <div class="info-row"><span class="info-label">💰 الرصيد</span><span class="info-value blue">${formatCurrency(user.wallet_balance)} SYP</span></div>
+                                <div class="info-row"><span class="info-label">📥 إجمالي الشحنات</span><span class="info-value blue">${formatCurrency(user.total_payments)} SYP</span></div>
+                                <div class="info-row"><span class="info-label">📤 إجمالي السحوبات</span><span class="info-value red">${formatCurrency(user.total_withdrawals)} SYP</span></div>
+                                <div class="info-row"><span class="info-label">👥 عدد الإحالات</span><span class="info-value">${user.referrals_count || 0}</span></div>
+                                <div class="info-row"><span class="info-label">💰 العمولات المكتسبة</span><span class="info-value blue">${formatCurrency(user.total_commission)} SYP</span></div>
+                                <div class="info-row"><span class="info-label">📊 عدد المعاملات</span><span class="info-value">${user.count_payments || 0} شحن / ${user.count_withdrawals || 0} سحب</span></div>
                             </div>
                         </div>
 
                         <hr class="divider">
                         <div class="d-flex gap-2 flex-wrap">
-                            <button class="btn btn-secondary btn-sm" onclick="loadPage('users')">
-                                <i class="fas fa-arrow-right"></i> رجوع
-                            </button>
-                            <button class="btn btn-sm ${user.is_banned == 1 ? 'btn-success' : 'btn-danger'}" 
-                                    onclick="toggleUserBan('${user.user_id}')">
-                                <i class="fas fa-${user.is_banned == 1 ? 'unlock' : 'ban'}"></i>
-                                ${user.is_banned == 1 ? 'فك الحظر' : 'حظر'}
-                            </button>
-                            <button class="btn btn-sm btn-warning" onclick="editUserBalance('${user.user_id}')">
-                                <i class="fas fa-edit"></i> تعديل الرصيد
-                            </button>
-                            <button class="btn btn-sm btn-info" onclick="loadPage('transactions'); setTimeout(() => searchTable('${user.user_id}', 'transactionsTable'), 500);">
-                                <i class="fas fa-exchange-alt"></i> معاملات المستخدم
-                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="loadPage('users')"><i class="fas fa-arrow-right"></i> رجوع</button>
+                            <button class="btn btn-sm ${user.is_banned == 1 ? 'btn-success' : 'btn-danger'}" onclick="toggleUserBan('${user.user_id}')"><i class="fas fa-${user.is_banned == 1 ? 'unlock' : 'ban'}"></i> ${user.is_banned == 1 ? 'فك الحظر' : 'حظر'}</button>
+                            <button class="btn btn-sm btn-warning" onclick="editUserBalance('${user.user_id}')"><i class="fas fa-edit"></i> تعديل الرصيد</button>
+                            <button class="btn btn-sm btn-info" onclick="loadPage('transactions'); setTimeout(() => searchTable('${user.user_id}', 'transactionsTable'), 500);"><i class="fas fa-exchange-alt"></i> معاملات المستخدم</button>
                         </div>
                     </div>
                 `;
@@ -1999,19 +1963,15 @@
         // ============================================================
 
         async function toggleUserBan(userId) {
-            const user = await apiCall('user', { userId });
-            const action = user.user?.is_banned == 1 ? 'فك حظر' : 'حظر';
+            const action = await apiCall('user', { userId }).then(d => d.user?.is_banned == 1 ? 'فك حظر' : 'حظر');
             if (!confirm(`هل أنت متأكد من ${action} المستخدم؟`)) return;
-
             try {
                 const data = await apiCall('toggle_ban', { userId });
                 if (data.success) {
                     showAlert('success', `✅ تم ${data.is_banned == 1 ? 'حظر' : 'فك حظر'} المستخدم بنجاح`);
                     loadPage('users');
                 }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         // ============================================================
@@ -2021,22 +1981,15 @@
         async function editUserBalance(userId) {
             const amount = prompt('💰 أدخل المبلغ (استخدم + للإضافة أو - للخصم):\nمثال: 1000 أو -500');
             if (amount === null) return;
-
             const value = parseFloat(amount);
-            if (isNaN(value)) {
-                showAlert('danger', '⚠️ الرجاء إدخال رقم صحيح');
-                return;
-            }
-
+            if (isNaN(value)) { showAlert('danger', '⚠️ الرجاء إدخال رقم صحيح'); return; }
             try {
                 const data = await apiCall('update_balance', { targetUser: userId, amount: value });
                 if (data.success) {
                     showAlert('success', `✅ تم تحديث الرصيد: ${formatCurrency(data.new_balance)} SYP`);
                     loadPage('users');
                 }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         // ============================================================
@@ -2063,58 +2016,33 @@
             let html = `
                 <div class="table-container">
                     <div class="table-header">
-                        <h6>
-                            <span class="header-icon"><i class="fas fa-exchange-alt"></i></span>
-                            سجل المعاملات
-                        </h6>
+                        <h6><span class="header-icon"><i class="fas fa-exchange-alt"></i></span> سجل المعاملات</h6>
                         <div class="table-tools">
                             <input class="search-box" placeholder="🔍 بحث عن معاملة..." onkeyup="searchTable(this.value, 'transactionsTable')">
-                            <span style="color:var(--text-muted);font-size:13px;">${transactions.length} معاملة</span>
+                            <span class="count-badge">${transactions.length} معاملة</span>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="transactionsTable">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>المستخدم</th>
-                                    <th>النوع</th>
-                                    <th>المبلغ</th>
-                                    <th>الطريقة</th>
-                                    <th>الحالة</th>
-                                    <th>البونص</th>
-                                    <th>التاريخ</th>
-                                </tr>
+                                <tr><th>#</th><th>المستخدم</th><th>النوع</th><th>المبلغ</th><th>الطريقة</th><th>الحالة</th><th>البونص</th><th>التاريخ</th></tr>
                             </thead>
                             <tbody>
             `;
 
             if (transactions.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="8">
-                            <div class="empty-state">
-                                <i class="fas fa-exchange-alt"></i>
-                                <h5>لا توجد معاملات</h5>
-                                <p>لم يتم تسجيل أي معاملات في النظام</p>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-exchange-alt"></i><h5>لا توجد معاملات</h5><p>لم يتم تسجيل أي معاملات</p></div></td></tr>`;
             } else {
                 transactions.forEach((tx, index) => {
                     const type = typeMap[tx.type] || tx.type;
                     const amount = tx.amount || 0;
                     const isPositive = amount >= 0;
-
                     html += `
                         <tr>
                             <td>${index + 1}</td>
                             <td><code>${truncate(tx.user_id, 10)}</code></td>
                             <td>${type}</td>
-                            <td class="${isPositive ? 'text-primary' : 'text-danger'}">
-                                ${isPositive ? '+' : ''}${formatCurrency(amount)}
-                            </td>
+                            <td class="${isPositive ? 'text-primary' : 'text-danger'}">${isPositive ? '+' : ''}${formatCurrency(amount)}</td>
                             <td>${tx.method || '-'}</td>
                             <td>${getStatusBadge(tx.status)}</td>
                             <td>${tx.bonus_amount > 0 ? formatCurrency(tx.bonus_amount) : '-'}</td>
@@ -2124,13 +2052,7 @@
                 });
             }
 
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
 
@@ -2145,46 +2067,24 @@
             let html = `
                 <div class="table-container">
                     <div class="table-header">
-                        <h6>
-                            <span class="header-icon"><i class="fas fa-hand-holding-usd"></i></span>
-                            طلبات السحب
-                        </h6>
+                        <h6><span class="header-icon"><i class="fas fa-hand-holding-usd"></i></span> طلبات السحب</h6>
                         <div class="table-tools">
-                            <span style="color:var(--text-muted);font-size:13px;">${withdrawals.length} طلب</span>
+                            <span class="count-badge">${withdrawals.length} طلب</span>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="withdrawalsTable">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>المستخدم</th>
-                                    <th>المبلغ</th>
-                                    <th>الطريقة</th>
-                                    <th>الحالة</th>
-                                    <th>التاريخ</th>
-                                    <th>الإجراءات</th>
-                                </tr>
+                                <tr><th>#</th><th>المستخدم</th><th>المبلغ</th><th>الطريقة</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th></tr>
                             </thead>
                             <tbody>
             `;
 
             if (withdrawals.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="7">
-                            <div class="empty-state">
-                                <i class="fas fa-hand-holding-usd"></i>
-                                <h5>لا توجد طلبات سحب</h5>
-                                <p>جميع طلبات السحب تمت معالجتها</p>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-hand-holding-usd"></i><h5>لا توجد طلبات سحب</h5><p>جميع الطلبات تمت معالجتها</p></div></td></tr>`;
             } else {
                 withdrawals.forEach((w, index) => {
                     const isPending = w.status === 'pending';
-
                     html += `
                         <tr>
                             <td>${index + 1}</td>
@@ -2196,60 +2096,34 @@
                             <td>
                                 ${isPending ? `
                                 <div class="btn-group-custom">
-                                    <button class="btn-sm-custom btn-approve" onclick="approveWithdrawal(${w.id})" title="موافقة">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn-sm-custom btn-reject" onclick="rejectWithdrawal(${w.id})" title="رفض">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                    <button class="btn-sm-custom btn-approve" onclick="approveWithdrawal(${w.id})" title="موافقة"><i class="fas fa-check"></i></button>
+                                    <button class="btn-sm-custom btn-reject" onclick="rejectWithdrawal(${w.id})" title="رفض"><i class="fas fa-times"></i></button>
                                 </div>
-                                ` : '<span style="color:var(--text-muted);font-size:12px;">معالج</span>'}
+                                ` : '<span style="color:var(--text-muted);font-size:11px;">معالج</span>'}
                             </td>
                         </tr>
                     `;
                 });
             }
 
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
 
-        // ============================================================
-        // معالجة طلبات السحب
-        // ============================================================
-
         async function approveWithdrawal(id) {
             if (!confirm('✅ هل أنت متأكد من الموافقة على طلب السحب؟')) return;
-
             try {
                 const data = await apiCall('update_withdrawal', { id, status: 'completed' });
-                if (data.success) {
-                    showAlert('success', '✅ تمت الموافقة على طلب السحب بنجاح');
-                    loadPage('withdrawals');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', '✅ تمت الموافقة'); loadPage('withdrawals'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         async function rejectWithdrawal(id) {
             if (!confirm('❌ هل أنت متأكد من رفض طلب السحب؟')) return;
-
             try {
                 const data = await apiCall('update_withdrawal', { id, status: 'rejected' });
-                if (data.success) {
-                    showAlert('success', '❌ تم رفض طلب السحب');
-                    loadPage('withdrawals');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', '❌ تم الرفض'); loadPage('withdrawals'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         // ============================================================
@@ -2263,47 +2137,24 @@
             let html = `
                 <div class="table-container">
                     <div class="table-header">
-                        <h6>
-                            <span class="header-icon"><i class="fas fa-credit-card"></i></span>
-                            طلبات الدفع اليدوية
-                        </h6>
+                        <h6><span class="header-icon"><i class="fas fa-credit-card"></i></span> طلبات الدفع اليدوية</h6>
                         <div class="table-tools">
-                            <span style="color:var(--text-muted);font-size:13px;">${payments.length} طلب</span>
+                            <span class="count-badge">${payments.length} طلب</span>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="paymentsTable">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>المستخدم</th>
-                                    <th>المبلغ</th>
-                                    <th>الطريقة</th>
-                                    <th>رقم العملية</th>
-                                    <th>الحالة</th>
-                                    <th>التاريخ</th>
-                                    <th>الإجراءات</th>
-                                </tr>
+                                <tr><th>#</th><th>المستخدم</th><th>المبلغ</th><th>الطريقة</th><th>رقم العملية</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th></tr>
                             </thead>
                             <tbody>
             `;
 
             if (payments.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="8">
-                            <div class="empty-state">
-                                <i class="fas fa-credit-card"></i>
-                                <h5>لا توجد طلبات دفع</h5>
-                                <p>جميع طلبات الدفع تمت معالجتها</p>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-credit-card"></i><h5>لا توجد طلبات دفع</h5><p>جميع الطلبات تمت معالجتها</p></div></td></tr>`;
             } else {
                 payments.forEach((p, index) => {
                     const isPending = p.status === 'pending';
-
                     html += `
                         <tr>
                             <td>${index + 1}</td>
@@ -2316,60 +2167,34 @@
                             <td>
                                 ${isPending ? `
                                 <div class="btn-group-custom">
-                                    <button class="btn-sm-custom btn-approve" onclick="approvePayment(${p.id})" title="موافقة">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn-sm-custom btn-reject" onclick="rejectPayment(${p.id})" title="رفض">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                    <button class="btn-sm-custom btn-approve" onclick="approvePayment(${p.id})" title="موافقة"><i class="fas fa-check"></i></button>
+                                    <button class="btn-sm-custom btn-reject" onclick="rejectPayment(${p.id})" title="رفض"><i class="fas fa-times"></i></button>
                                 </div>
-                                ` : '<span style="color:var(--text-muted);font-size:12px;">معالج</span>'}
+                                ` : '<span style="color:var(--text-muted);font-size:11px;">معالج</span>'}
                             </td>
                         </tr>
                     `;
                 });
             }
 
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
 
-        // ============================================================
-        // معالجة طلبات الدفع
-        // ============================================================
-
         async function approvePayment(id) {
             if (!confirm('✅ هل أنت متأكد من الموافقة على طلب الدفع؟')) return;
-
             try {
                 const data = await apiCall('update_payment', { id, status: 'completed' });
-                if (data.success) {
-                    showAlert('success', '✅ تمت الموافقة على طلب الدفع بنجاح');
-                    loadPage('payments');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', '✅ تمت الموافقة'); loadPage('payments'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         async function rejectPayment(id) {
             if (!confirm('❌ هل أنت متأكد من رفض طلب الدفع؟')) return;
-
             try {
                 const data = await apiCall('update_payment', { id, status: 'rejected' });
-                if (data.success) {
-                    showAlert('success', '❌ تم رفض طلب الدفع');
-                    loadPage('payments');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', '❌ تم الرفض'); loadPage('payments'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         // ============================================================
@@ -2382,55 +2207,31 @@
 
             let html = `
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <h6 style="margin:0;color:var(--primary-light);">
-                        <i class="fas fa-gift" style="color:var(--primary);"></i> أكواد الهدية
-                    </h6>
-                    <button class="btn-create" onclick="showCreateGiftCode()">
-                        <i class="fas fa-plus"></i> إنشاء كود جديد
-                    </button>
+                    <h6 style="margin:0;color:var(--primary-light);"><i class="fas fa-gift" style="color:var(--primary);"></i> أكواد الهدية</h6>
+                    <button class="btn-create" onclick="showCreateGiftCode()"><i class="fas fa-plus"></i> إنشاء كود جديد</button>
                 </div>
-
                 <div class="table-container">
                     <div class="table-header">
                         <div class="table-tools">
                             <input class="search-box" placeholder="🔍 بحث عن كود..." onkeyup="searchTable(this.value, 'giftTable')">
-                            <span style="color:var(--text-muted);font-size:13px;">${codes.length} كود</span>
+                            <span class="count-badge">${codes.length} كود</span>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="giftTable">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>الكود</th>
-                                    <th>القيمة</th>
-                                    <th>الاستخدامات</th>
-                                    <th>الحالة</th>
-                                    <th>الصلاحية</th>
-                                    <th>الإجراءات</th>
-                                </tr>
+                                <tr><th>#</th><th>الكود</th><th>القيمة</th><th>الاستخدامات</th><th>الحالة</th><th>الصلاحية</th><th>الإجراءات</th></tr>
                             </thead>
                             <tbody>
             `;
 
             if (codes.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="7">
-                            <div class="empty-state">
-                                <i class="fas fa-gift"></i>
-                                <h5>لا توجد أكواد هدية</h5>
-                                <p>يمكنك إنشاء كود هدية جديد باستخدام الزر أعلاه</p>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-gift"></i><h5>لا توجد أكواد هدية</h5><p>يمكنك إنشاء كود جديد باستخدام الزر أعلاه</p></div></td></tr>`;
             } else {
                 codes.forEach((code, index) => {
                     const isActive = code.is_active == 1;
                     const used = code.used_count || 0;
                     const maxUses = code.max_uses || 1;
-
                     html += `
                         <tr>
                             <td>${index + 1}</td>
@@ -2441,12 +2242,8 @@
                             <td>${code.expires_at ? formatDate(code.expires_at) : 'لا يوجد'}</td>
                             <td>
                                 <div class="btn-group-custom">
-                                    <button class="btn-sm-custom btn-toggle" onclick="toggleGiftCode(${code.id})" title="${isActive ? 'تعطيل' : 'تفعيل'}">
-                                        <i class="fas fa-${isActive ? 'pause' : 'play'}"></i>
-                                    </button>
-                                    <button class="btn-sm-custom btn-delete" onclick="deleteGiftCode(${code.id})" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    <button class="btn-sm-custom btn-toggle" onclick="toggleGiftCode(${code.id})" title="${isActive ? 'تعطيل' : 'تفعيل'}"><i class="fas fa-${isActive ? 'pause' : 'play'}"></i></button>
+                                    <button class="btn-sm-custom btn-delete" onclick="deleteGiftCode(${code.id})" title="حذف"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -2454,19 +2251,9 @@
                 });
             }
 
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
-
-        // ============================================================
-        // إنشاء كود هدية
-        // ============================================================
 
         function showCreateGiftCode() {
             const modal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -2492,66 +2279,29 @@
                 const amount = parseFloat(document.getElementById('giftAmount').value);
                 const maxUses = parseInt(document.getElementById('giftMaxUses').value) || 1;
                 const expiresIn = parseInt(document.getElementById('giftExpiry').value) || 0;
-
-                if (!amount || amount <= 0) {
-                    showAlert('danger', '⚠️ الرجاء إدخال قيمة صحيحة');
-                    return;
-                }
-
+                if (!amount || amount <= 0) { showAlert('danger', '⚠️ الرجاء إدخال قيمة صحيحة'); return; }
                 try {
-                    const data = await apiCall('create_gift_code', {
-                        amount,
-                        maxUses,
-                        expiresIn: expiresIn > 0 ? expiresIn : null
-                    });
-
-                    if (data.success) {
-                        showAlert('success', `✅ تم إنشاء الكود: <code>${data.code}</code>`);
-                        modal.hide();
-                        loadPage('gift_codes');
-                    }
-                } catch (error) {
-                    showAlert('danger', error.message);
-                }
+                    const data = await apiCall('create_gift_code', { amount, maxUses, expiresIn: expiresIn > 0 ? expiresIn : null });
+                    if (data.success) { showAlert('success', `✅ تم إنشاء الكود: <code>${data.code}</code>`); modal.hide(); loadPage('gift_codes'); }
+                } catch (error) { showAlert('danger', error.message); }
             };
-
             modal.show();
         }
 
-        // ============================================================
-        // تفعيل/تعطيل كود هدية
-        // ============================================================
-
         async function toggleGiftCode(codeId) {
             if (!confirm('هل أنت متأكد من تغيير حالة الكود؟')) return;
-
             try {
                 const data = await apiCall('toggle_gift_code', { codeId });
-                if (data.success) {
-                    showAlert('success', `✅ تم ${data.is_active == 1 ? 'تفعيل' : 'تعطيل'} الكود`);
-                    loadPage('gift_codes');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', `✅ تم ${data.is_active == 1 ? 'تفعيل' : 'تعطيل'} الكود`); loadPage('gift_codes'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
-
-        // ============================================================
-        // حذف كود هدية
-        // ============================================================
 
         async function deleteGiftCode(codeId) {
             if (!confirm('⚠️ هل أنت متأكد من حذف هذا الكود؟ لا يمكن التراجع!')) return;
-
             try {
                 const data = await apiCall('delete_gift_code', { codeId });
-                if (data.success) {
-                    showAlert('success', '✅ تم حذف الكود بنجاح');
-                    loadPage('gift_codes');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', '✅ تم حذف الكود'); loadPage('gift_codes'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         // ============================================================
@@ -2567,28 +2317,14 @@
                 <div class="row g-4 mb-4">
                     <div class="col-md-6">
                         <div class="stat-card blue">
-                            <h6 style="color:var(--warning);">
-                                <i class="fas fa-trophy"></i> أفضل المحيلين
-                            </h6>
+                            <h6 style="color:var(--warning);"><i class="fas fa-trophy"></i> أفضل المحيلين</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>المحيل</th>
-                                            <th>الإحالات</th>
-                                            <th>العمولة</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>#</th><th>المحيل</th><th>الإحالات</th><th>العمولة</th></tr></thead>
                                     <tbody>
-            `;
-
+                            `;
             if (topReferrers.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="4" class="text-center text-muted">لا توجد إحالات</td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="4" class="text-center text-muted">لا توجد إحالات</td></tr>`;
             } else {
                 topReferrers.forEach((ref, index) => {
                     html += `
@@ -2601,38 +2337,17 @@
                     `;
                 });
             }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
+            html += `</tbody></table></div></div></div>
                     <div class="col-md-6">
                         <div class="stat-card red">
-                            <h6 style="color:var(--primary-light);">
-                                <i class="fas fa-list"></i> آخر الإحالات
-                            </h6>
+                            <h6 style="color:var(--primary-light);"><i class="fas fa-list"></i> آخر الإحالات</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>المحيل</th>
-                                            <th>المحال</th>
-                                            <th>العمولة</th>
-                                            <th>التاريخ</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>المحيل</th><th>المحال</th><th>العمولة</th><th>التاريخ</th></tr></thead>
                                     <tbody>
-            `;
-
+                            `;
             if (referrals.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="4" class="text-center text-muted">لا توجد إحالات</td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="4" class="text-center text-muted">لا توجد إحالات</td></tr>`;
             } else {
                 referrals.slice(0, 20).forEach(ref => {
                     html += `
@@ -2645,16 +2360,7 @@
                     `;
                 });
             }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
 
@@ -2665,7 +2371,6 @@
         async function loadSettings() {
             const data = await apiCall('settings');
             const settings = data.settings || {};
-
             const methodData = await apiCall('payment_methods');
             const manualMethods = methodData.manual || [];
             const withdrawMethods = methodData.withdraw || [];
@@ -2677,15 +2382,9 @@
                             <h6><i class="fas fa-cog" style="color:var(--primary);"></i> إعدادات النظام</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>الإعداد</th>
-                                            <th>القيمة</th>
-                                            <th>الإجراء</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>الإعداد</th><th>القيمة</th><th>الإجراء</th></tr></thead>
                                     <tbody>
-            `;
+                            `;
 
             const settingsList = [
                 { key: 'referral_commission', label: 'عمولة الإحالة %' },
@@ -2704,43 +2403,22 @@
                     <tr>
                         <td>${item.label}</td>
                         <td><strong>${value}</strong></td>
-                        <td>
-                            <button class="btn-sm-custom btn-edit" onclick="editSetting('${item.key}', '${item.label}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </td>
+                        <td><button class="btn-sm-custom btn-edit" onclick="editSetting('${item.key}', '${item.label}')"><i class="fas fa-edit"></i></button></td>
                     </tr>
                 `;
             });
 
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
+            html += `</tbody></table></div></div></div>
                     <div class="col-md-6">
                         <div class="stat-card gradient">
                             <h6><i class="fas fa-credit-card" style="color:var(--primary-light);"></i> طرق الدفع اليدوية</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>الطريقة</th>
-                                            <th>الحالة</th>
-                                            <th>الإجراء</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>الطريقة</th><th>الحالة</th><th>الإجراء</th></tr></thead>
                                     <tbody>
-            `;
-
+                            `;
             if (manualMethods.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="3" class="text-center text-muted">لا توجد طرق دفع</td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="3" class="text-center text-muted">لا توجد طرق دفع</td></tr>`;
             } else {
                 manualMethods.forEach(method => {
                     const isEnabled = method.enabled == 1;
@@ -2748,44 +2426,21 @@
                         <tr>
                             <td>${method.name}</td>
                             <td>${getStatusBadge(isEnabled ? 'active' : 'inactive')}</td>
-                            <td>
-                                <button class="btn-sm-custom ${isEnabled ? 'btn-toggle' : 'btn-approve'}" 
-                                        onclick="togglePaymentMethod(${method.id})">
-                                    <i class="fas fa-${isEnabled ? 'pause' : 'play'}"></i>
-                                    ${isEnabled ? 'تعطيل' : 'تفعيل'}
-                                </button>
-                            </td>
+                            <td><button class="btn-sm-custom ${isEnabled ? 'btn-toggle' : 'btn-approve'}" onclick="togglePaymentMethod(${method.id})"><i class="fas fa-${isEnabled ? 'pause' : 'play'}"></i> ${isEnabled ? 'تعطيل' : 'تفعيل'}</button></td>
                         </tr>
                     `;
                 });
             }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
+            html += `</tbody></table></div></div>
                         <div class="stat-card red mt-3">
                             <h6><i class="fas fa-hand-holding-usd" style="color:var(--warning);"></i> طرق السحب</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>الطريقة</th>
-                                            <th>الحالة</th>
-                                            <th>الإجراء</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>الطريقة</th><th>الحالة</th><th>الإجراء</th></tr></thead>
                                     <tbody>
-            `;
-
+                            `;
             if (withdrawMethods.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="3" class="text-center text-muted">لا توجد طرق سحب</td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="3" class="text-center text-muted">لا توجد طرق سحب</td></tr>`;
             } else {
                 withdrawMethods.forEach(method => {
                     const isEnabled = method.enabled == 1;
@@ -2793,94 +2448,44 @@
                         <tr>
                             <td>${method.name}</td>
                             <td>${getStatusBadge(isEnabled ? 'active' : 'inactive')}</td>
-                            <td>
-                                <button class="btn-sm-custom ${isEnabled ? 'btn-toggle' : 'btn-approve'}" 
-                                        onclick="toggleWithdrawMethod(${method.id})">
-                                    <i class="fas fa-${isEnabled ? 'pause' : 'play'}"></i>
-                                    ${isEnabled ? 'تعطيل' : 'تفعيل'}
-                                </button>
-                            </td>
+                            <td><button class="btn-sm-custom ${isEnabled ? 'btn-toggle' : 'btn-approve'}" onclick="toggleWithdrawMethod(${method.id})"><i class="fas fa-${isEnabled ? 'pause' : 'play'}"></i> ${isEnabled ? 'تعطيل' : 'تفعيل'}</button></td>
                         </tr>
                     `;
                 });
             }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
-
-        // ============================================================
-        // تعديل إعداد
-        // ============================================================
 
         function editSetting(key, label) {
             const modal = new bootstrap.Modal(document.getElementById('editModal'));
             document.getElementById('editModalTitle').innerHTML = `⚙️ تعديل: ${label}`;
             document.getElementById('editModalBody').innerHTML = `
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label">القيمة الجديدة</label>
-                        <input type="text" class="form-control" id="settingValue" placeholder="أدخل القيمة الجديدة">
-                    </div>
-                </form>
+                <form><div class="mb-3"><label class="form-label">القيمة الجديدة</label><input type="text" class="form-control" id="settingValue" placeholder="أدخل القيمة الجديدة"></div></form>
             `;
-
             document.getElementById('editModalSave').onclick = async function() {
                 const value = document.getElementById('settingValue').value.trim();
-                if (!value) {
-                    showAlert('danger', '⚠️ الرجاء إدخال قيمة');
-                    return;
-                }
-
+                if (!value) { showAlert('danger', '⚠️ الرجاء إدخال قيمة'); return; }
                 try {
                     const data = await apiCall('update_setting', { key, value });
-                    if (data.success) {
-                        showAlert('success', '✅ تم تحديث الإعداد بنجاح');
-                        modal.hide();
-                        loadPage('settings');
-                    }
-                } catch (error) {
-                    showAlert('danger', error.message);
-                }
+                    if (data.success) { showAlert('success', '✅ تم تحديث الإعداد'); modal.hide(); loadPage('settings'); }
+                } catch (error) { showAlert('danger', error.message); }
             };
-
             modal.show();
         }
-
-        // ============================================================
-        // تفعيل/تعطيل طرق الدفع والسحب
-        // ============================================================
 
         async function togglePaymentMethod(methodId) {
             try {
                 const data = await apiCall('toggle_payment_method', { methodId });
-                if (data.success) {
-                    showAlert('success', `✅ تم ${data.enabled == 1 ? 'تفعيل' : 'تعطيل'} طريقة الدفع`);
-                    loadPage('settings');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', `✅ تم ${data.enabled == 1 ? 'تفعيل' : 'تعطيل'} طريقة الدفع`); loadPage('settings'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         async function toggleWithdrawMethod(methodId) {
             try {
                 const data = await apiCall('toggle_withdraw_method', { methodId });
-                if (data.success) {
-                    showAlert('success', `✅ تم ${data.enabled == 1 ? 'تفعيل' : 'تعطيل'} طريقة السحب`);
-                    loadPage('settings');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', `✅ تم ${data.enabled == 1 ? 'تفعيل' : 'تعطيل'} طريقة السحب`); loadPage('settings'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         // ============================================================
@@ -2894,41 +2499,21 @@
             let html = `
                 <div class="table-container">
                     <div class="table-header">
-                        <h6>
-                            <span class="header-icon" style="background:var(--gradient-red);"><i class="fas fa-ban"></i></span>
-                            الأرقام المحظورة
-                        </h6>
+                        <h6><span class="header-icon" style="background:var(--gradient-red);"><i class="fas fa-ban"></i></span> الأرقام المحظورة</h6>
                         <div class="table-tools">
-                            <span style="color:var(--text-muted);font-size:13px;">${blocked.length} رقم محظور</span>
+                            <span class="count-badge" style="color:var(--danger-light);">${blocked.length} رقم محظور</span>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="blockedTable">
                             <thead>
-                                <tr>
-                                    <th>رقم العملية</th>
-                                    <th>السبب</th>
-                                    <th>التاريخ</th>
-                                    <th>المستخدم 1</th>
-                                    <th>المستخدم 2</th>
-                                    <th>الإجراء</th>
-                                </tr>
+                                <tr><th>رقم العملية</th><th>السبب</th><th>التاريخ</th><th>المستخدم 1</th><th>المستخدم 2</th><th>الإجراء</th></tr>
                             </thead>
                             <tbody>
             `;
 
             if (blocked.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="6">
-                            <div class="empty-state">
-                                <i class="fas fa-ban"></i>
-                                <h5>لا توجد أرقام محظورة</h5>
-                                <p>جميع الأرقام في النظام نظيفة</p>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-ban"></i><h5>لا توجد أرقام محظورة</h5><p>جميع الأرقام في النظام نظيفة</p></div></td></tr>`;
             } else {
                 blocked.forEach(item => {
                     html += `
@@ -2938,42 +2523,22 @@
                             <td>${item.date || '-'}</td>
                             <td><code>${truncate(item.user1_id, 8)}</code></td>
                             <td><code>${truncate(item.user2_id, 8)}</code></td>
-                            <td>
-                                <button class="btn-sm-custom btn-success" onclick="unblockTxid('${item.txid}')">
-                                    <i class="fas fa-unlock"></i> فك الحظر
-                                </button>
-                            </td>
+                            <td><button class="btn-sm-custom btn-success" onclick="unblockTxid('${item.txid}')"><i class="fas fa-unlock"></i> فك الحظر</button></td>
                         </tr>
                     `;
                 });
             }
 
-            html += `
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
 
-        // ============================================================
-        // فك حظر رقم
-        // ============================================================
-
         async function unblockTxid(txid) {
             if (!confirm(`⚠️ هل أنت متأكد من فك حظر ${txid}؟`)) return;
-
             try {
                 const data = await apiCall('unblock_txid', { txid });
-                if (data.success) {
-                    showAlert('success', '✅ تم فك الحظر بنجاح');
-                    loadPage('blocked');
-                }
-            } catch (error) {
-                showAlert('danger', error.message);
-            }
+                if (data.success) { showAlert('success', '✅ تم فك الحظر'); loadPage('blocked'); }
+            } catch (error) { showAlert('danger', error.message); }
         }
 
         // ============================================================
@@ -2993,7 +2558,6 @@
                             <h6><i class="fas fa-file-alt" style="color:var(--primary-light);"></i> تقرير شامل</h6>
                             <p class="text-muted">تم إنشاء التقرير: ${formatDate(data.generated_at)}</p>
                             <hr>
-
                             <div class="row">
                                 <div class="col-md-4">
                                     <p><strong>👥 إجمالي المستخدمين:</strong> <span class="text-primary">${stats.total_users || 0}</span></p>
@@ -3013,72 +2577,39 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="stat-card blue">
                             <h6><i class="fas fa-exchange-alt" style="color:var(--primary-light);"></i> آخر المعاملات (10)</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>المستخدم</th>
-                                            <th>النوع</th>
-                                            <th>المبلغ</th>
-                                            <th>التاريخ</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>المستخدم</th><th>النوع</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
                                     <tbody>
-            `;
-
+                            `;
             if (transactions.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="4" class="text-center text-muted">لا توجد معاملات</td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="4" class="text-center text-muted">لا توجد معاملات</td></tr>`;
             } else {
                 transactions.slice(0, 10).forEach(tx => {
                     html += `
                         <tr>
                             <td><code>${truncate(tx.user_id, 8)}</code></td>
                             <td>${tx.type}</td>
-                            <td class="${tx.amount >= 0 ? 'text-primary' : 'text-danger'}">
-                                ${formatCurrency(tx.amount)}
-                            </td>
+                            <td class="${tx.amount >= 0 ? 'text-primary' : 'text-danger'}">${formatCurrency(tx.amount)}</td>
                             <td>${formatDate(tx.created_at)}</td>
                         </tr>
                     `;
                 });
             }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
+            html += `</tbody></table></div></div></div>
                     <div class="col-md-6">
                         <div class="stat-card red">
                             <h6><i class="fas fa-clock" style="color:var(--warning);"></i> طلبات سحب معلقة</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>المستخدم</th>
-                                            <th>المبلغ</th>
-                                            <th>التاريخ</th>
-                                        </tr>
-                                    </thead>
+                                    <thead><tr><th>المستخدم</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
                                     <tbody>
-            `;
-
+                            `;
             if (pending.length === 0) {
-                html += `
-                    <tr>
-                        <td colspan="3" class="text-center text-muted">لا توجد طلبات معلقة</td>
-                    </tr>
-                `;
+                html += `<tr><td colspan="3" class="text-center text-muted">لا توجد طلبات معلقة</td></tr>`;
             } else {
                 pending.slice(0, 10).forEach(w => {
                     html += `
@@ -3090,16 +2621,7 @@
                     `;
                 });
             }
-
-            html += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
+            html += `</tbody></table></div></div></div></div>`;
             document.getElementById('contentArea').innerHTML = html;
         }
 
@@ -3125,25 +2647,18 @@
                             <span class="stat">🟢 تصحيح: <span class="count debug">${debugCount}</span></span>
                         </div>
                         <div class="console-logs">
-                            ${data.logs.map(log => {
-                                const levelClass = `level-${log.level}`;
-                                return `
-                                    <div class="log-entry">
-                                        <span class="time">${log.timestamp}</span>
-                                        <span class="${levelClass}">[${log.level}]</span>
-                                        <span class="message">${log.message}</span>
-                                        ${log.data ? `<div class="data">📎 ${JSON.stringify(log.data, null, 2)}</div>` : ''}
-                                    </div>
-                                `;
-                            }).join('')}
+                            ${data.logs.map(log => `
+                                <div class="log-entry">
+                                    <span class="time">${log.timestamp}</span>
+                                    <span class="level-${log.level}">[${log.level}]</span>
+                                    <span class="message">${log.message}</span>
+                                    ${log.data ? `<div class="data">📎 ${JSON.stringify(log.data, null, 2)}</div>` : ''}
+                                </div>
+                            `).join('')}
                         </div>
                         <div class="mt-3 d-flex gap-2">
-                            <button class="btn btn-sm btn-danger" onclick="clearLogs()">
-                                <i class="fas fa-trash"></i> مسح السجل
-                            </button>
-                            <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
-                                <i class="fas fa-times"></i> إغلاق
-                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="clearLogs()"><i class="fas fa-trash"></i> مسح السجل</button>
+                            <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i> إغلاق</button>
                         </div>
                     `;
 
@@ -3162,7 +2677,7 @@
             if (!confirm('هل أنت متأكد من مسح سجل الأخطاء؟')) return;
             try {
                 await apiCall('clear_logs');
-                showAlert('success', '✅ تم مسح السجل بنجاح');
+                showAlert('success', '✅ تم مسح السجل');
                 document.getElementById('errorCount').textContent = '0';
                 showErrorLogs();
             } catch (error) {
@@ -3176,9 +2691,7 @@
                 if (data.errorCount !== undefined) {
                     document.getElementById('errorCount').textContent = data.errorCount;
                 }
-            } catch (e) {
-                // تجاهل
-            }
+            } catch (e) {}
         }
 
         // ============================================================
